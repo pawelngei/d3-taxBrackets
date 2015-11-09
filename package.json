@@ -17,6 +17,7 @@
   },
   "homepage": "https://github.com/pawelchojnacki/d3-gallery#readme",
   "devDependencies": {
+    "d3": "^3.5.6",
     "gulp": "^3.9.0",
     "gulp-babel": "^5.3.0"
   }

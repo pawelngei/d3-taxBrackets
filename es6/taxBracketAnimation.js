@@ -1,6 +1,10 @@
+// example d3 file
 
-let b = 5;
+let data = [4, 8, 15, 16, 23, 43];
 
-a => console.log(a);
-
-console.log('hello world');
+d3.select('.chart')
+  .selectAll('div')
+    .data(data)
+  .enter().append('div')
+    .style('width', datapoint => datapoint * 10 + 'px')
+    .text(datapoint => datapoint);
