@@ -1,5 +1,6 @@
 var gulp = require('gulp');
 var babel = require('gulp-babel');
+var serve = require('gulp-serve')
 
 var ES6_SOURCE = 'es6/**/*';
 var JS_TARGET = 'js';
@@ -14,4 +15,9 @@ gulp.task('watch', function () {
   gulp.watch(ES6_SOURCE, ['js']);
 })
 
-gulp.task('default', ['js', 'watch'])
+gulp.task('serve', serve({
+  root: '.',
+  port: 8080
+}))
+
+gulp.task('default', ['js', 'serve', 'watch'])
