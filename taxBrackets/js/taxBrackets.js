@@ -71,22 +71,33 @@ var renderGraph = function renderGraph(graphData) {
 
   var innerFrame = svg.append('g').attr('transform', 'translate(' + boxMargin.left + ',' + boxMargin.top + ')');
 
-  var salaryRects = innerFrame.selectAll('.salary').data(graphData).enter().append('rect').attr('class', 'salary').attr('x', function (d) {
+  var salaryRects = innerFrame.selectAll('.salary').data(graphData);
+  salaryRects /* enter phase */
+  .enter().append('rect');
+  salaryRects /* update phase */
+  .attr('class', 'salary').attr('x', function (d) {
     return xScale(d.start);
   }).attr('y', 50).attr('width', function (d) {
     return xScale(d.end - d.start) - 1;
   }).attr('height', 25);
-  var taxRects = innerFrame.selectAll('.tax').data(graphData).enter().append('rect') /* tax rect */
-  .attr('class', 'tax').attr('x', function (d) {
+  salaryRects /* exit phase */
+  .exit().remove();
+  var taxRects = innerFrame.selectAll('.tax').data(graphData);
+  taxRects.enter().append('rect');
+  taxRects.attr('class', 'tax').attr('x', function (d) {
     return xScale(d.start);
   }).attr('y', 25).attr('width', function (d) {
     return xScale(d.taxLength);
   }).attr('height', 25);
-  var bracketLegend = innerFrame.selectAll('.percent').data(graphData).enter().append('text').attr('class', 'percent').attr('x', function (d) {
+  taxRects.exit().remove();
+  var bracketLegend = innerFrame.selectAll('.percent').data(graphData);
+  bracketLegend.enter().append('text');
+  bracketLegend.attr('class', 'percent').attr('x', function (d) {
     return xScale(d.start + (d.end - d.start) / 2);
-  }).attr('y', 10).text(function (d) {
+  }).attr('y', 20).text(function (d) {
     return d.percent + '%';
   }).style("text-anchor", "middle");
+  bracketLegend.exit().remove();
 };
 
 var graphData = processData(taxData, salary);

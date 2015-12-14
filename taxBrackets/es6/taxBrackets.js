@@ -74,34 +74,39 @@ let renderGraph = function renderGraph (graphData) {
   let innerFrame = svg.append('g')
       .attr('transform', `translate(${boxMargin.left},${boxMargin.top})`);
 
-  let salaryRects = innerFrame.selectAll('.salary')
-    .data(graphData)
-    .enter()
-      .append('rect')
+  let salaryRects = innerFrame.selectAll('.salary').data(graphData)
+      salaryRects /* enter phase */
+        .enter().append('rect');
+      salaryRects /* update phase */
         .attr('class', 'salary')
         .attr('x', d => xScale(d.start))
         .attr('y', 50)
         .attr('width', d => xScale(d.end - d.start) - 1)
-        .attr('height', 25)
-  let taxRects = innerFrame.selectAll('.tax')
-    .data(graphData)
-    .enter()
-      .append('rect') /* tax rect */
+        .attr('height', 25);
+      salaryRects /* exit phase */
+        .exit().remove();
+  let taxRects = innerFrame.selectAll('.tax').data(graphData)
+      taxRects
+        .enter().append('rect');
+      taxRects
         .attr('class', 'tax')
         .attr('x', d => xScale(d.start))
         .attr('y', 25)
         .attr('width', d=> xScale(d.taxLength))
-        .attr('height', 25)
-  let bracketLegend = innerFrame.selectAll('.percent')
-    .data(graphData)
-    .enter()
-      .append('text')
+        .attr('height', 25);
+      taxRects
+        .exit().remove();
+  let bracketLegend = innerFrame.selectAll('.percent').data(graphData)
+      bracketLegend
+        .enter().append('text')
+      bracketLegend
         .attr('class', 'percent')
         .attr('x', d => xScale(d.start + (d.end - d.start)/2))
-        .attr('y', 10)
+        .attr('y', 20)
         .text(d => d.percent + '%')
         .style("text-anchor", "middle")
-
+      bracketLegend
+        .exit().remove()
 }
 
 let graphData = processData(taxData, salary);
