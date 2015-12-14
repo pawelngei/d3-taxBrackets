@@ -26,8 +26,6 @@ var taxData = [{
   constant: 0
 }];
 
-var salary = 50000;
-
 var processData = function processData(taxBrackets, salary) {
   // this is just a proof of concept, very ugly code
   var graphData = [],
@@ -57,7 +55,7 @@ var processData = function processData(taxBrackets, salary) {
 var renderGraph = function renderGraph(graphData) {
   // create graphConfig object and unpack
   var outerWidth = 1000,
-      outerHeight = 200,
+      outerHeight = 100,
       boxMargin = { top: 0, right: 25, bottom: 0, left: 25 },
       innerWidth = outerWidth - boxMargin.left - boxMargin.right,
       innerHeight = outerHeight - boxMargin.top - boxMargin.bottom,
@@ -78,7 +76,7 @@ var renderGraph = function renderGraph(graphData) {
   .attr('class', 'salary').attr('x', function (d) {
     return xScale(d.start);
   }).attr('y', 50).attr('width', function (d) {
-    return xScale(d.end - d.start) - 1;
+    return xScale(d.end - d.start) - barMargin;
   }).attr('height', 25);
   salaryRects /* exit phase */
   .exit().remove();
@@ -100,5 +98,17 @@ var renderGraph = function renderGraph(graphData) {
   bracketLegend.exit().remove();
 };
 
-var graphData = processData(taxData, salary);
-renderGraph(graphData);
+var initGraph = function initGraph(salary) {
+  var graphData = processData(taxData, salary);
+  renderGraph(graphData);
+};
+
+initGraph(16000);
+
+$('#salary').on('keyup', function (event) {
+  if (event.keyCode !== 13) {
+    return;
+  }
+  var value = $('#salary').val();
+  initGraph(value);
+});
