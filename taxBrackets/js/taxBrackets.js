@@ -26,24 +26,7 @@ var taxData = [{
   constant: 0
 }];
 
-var salary = 25000,
-    exampleTax = 5000;
-
-var outerWidth = 1000,
-    outerHeight = 200,
-    margin = { top: 0, right: 25, bottom: 0, left: 25 },
-    innerWidth = outerWidth - margin.left - margin.right,
-    innerHeight = outerHeight - margin.top - margin.bottom;
-
-var xScale = d3.scale.linear().range([0, innerWidth]).domain([0, salary]);
-
-var svg = d3.select('#taxBrackets').append('svg').attr('width', outerWidth).attr('height', outerHeight);
-
-var frame = svg.append('g').attr('transform', 'translate(' + margin.left + ',' + margin.top + ')');
-
-frame.append('rect').attr('x', 0).attr('y', 150).attr('width', xScale(salary)).attr('height', 25).attr('class', 'salary');
-
-frame.append('rect').attr('x', 0).attr('y', 125).attr('width', xScale(exampleTax)).attr('height', 25).attr('class', 'tax');
+var salary = 41667;
 
 var processData = function processData(taxBrackets, salary) {
   // this is just a proof of concept, very ugly code
@@ -55,16 +38,47 @@ var processData = function processData(taxBrackets, salary) {
       var start = undefined,
           end = undefined,
           percent = undefined,
-          taxEnd = undefined;
+          taxLength = undefined;
       start = graphData[graphData.length - 1] ? graphData[graphData.length - 1].end : 0;
       end = salary < taxBrackets[i].limit ? salary : taxBrackets[i].limit;
       percent = taxBrackets[i].taxValue;
-      taxEnd = Math.floor((end - start) * percent / 100);
-      graphData.push({ start: start, end: end, percent: percent, taxEnd: taxEnd });
+      taxLength = Math.floor((end - start) * percent / 100);
+      graphData.push({ start: start, end: end, percent: percent, taxLength: taxLength });
       lastLimit = taxBrackets[i].limit;
     }
   }
   return graphData;
 };
 
-processData(taxData, salary);
+var renderGraph = function renderGraph(graphData) {
+  // create graphConfig object and unpack
+  var outerWidth = 1000,
+      outerHeight = 200,
+      boxMargin = { top: 0, right: 25, bottom: 0, left: 25 },
+      innerWidth = outerWidth - boxMargin.left - boxMargin.right,
+      innerHeight = outerHeight - boxMargin.top - boxMargin.bottom,
+      barMargin = 2; /* px, change to xScale */
+
+  var xScale = d3.scale.linear().rangeRound([0, innerWidth])
+  // be ready to change to logscale with big values
+  .domain([0, graphData[graphData.length - 1].end]);
+
+  var svg = d3.select('#taxBrackets').append('svg').attr('width', outerWidth).attr('height', outerHeight);
+
+  var innerFrame = svg.append('g').attr('transform', 'translate(' + boxMargin.left + ',' + boxMargin.top + ')');
+
+  var salaryRects = innerFrame.selectAll('.salary').data(graphData).enter().append('rect').attr('class', 'salary').attr('x', function (d) {
+    return xScale(d.start);
+  }).attr('y', 50).attr('width', function (d) {
+    return xScale(d.end - d.start) - 1;
+  }).attr('height', 25);
+  var taxRects = innerFrame.selectAll('.tax').data(graphData).enter().append('rect') /* tax rect */
+  .attr('class', 'tax').attr('x', function (d) {
+    return xScale(d.start);
+  }).attr('y', 25).attr('width', function (d) {
+    return xScale(d.taxLength);
+  }).attr('height', 25);
+};
+
+var graphData = processData(taxData, salary);
+renderGraph(graphData);
