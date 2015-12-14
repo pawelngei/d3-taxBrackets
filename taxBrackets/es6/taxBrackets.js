@@ -31,7 +31,7 @@ let taxData = [
   }
 ];
 
-let salary = 41667;
+let salary = 50000;
 
 let processData = function processData (taxBrackets, salary) {
   // this is just a proof of concept, very ugly code
@@ -43,6 +43,8 @@ let processData = function processData (taxBrackets, salary) {
       let start, end, percent, taxLength;
       start = graphData[graphData.length - 1]? graphData[graphData.length -1].end : 0;
       end = salary < taxBrackets[i].limit ? salary : taxBrackets[i].limit;
+      // TODO: Refactor
+      if (end < 0) {end = salary};
       percent = taxBrackets[i].taxValue;
       taxLength = Math.floor((end - start) * percent / 100);
       graphData.push({start, end, percent, taxLength});

@@ -26,7 +26,7 @@ var taxData = [{
   constant: 0
 }];
 
-var salary = 41667;
+var salary = 50000;
 
 var processData = function processData(taxBrackets, salary) {
   // this is just a proof of concept, very ugly code
@@ -41,6 +41,10 @@ var processData = function processData(taxBrackets, salary) {
           taxLength = undefined;
       start = graphData[graphData.length - 1] ? graphData[graphData.length - 1].end : 0;
       end = salary < taxBrackets[i].limit ? salary : taxBrackets[i].limit;
+      // TODO: Refactor
+      if (end < 0) {
+        end = salary;
+      };
       percent = taxBrackets[i].taxValue;
       taxLength = Math.floor((end - start) * percent / 100);
       graphData.push({ start: start, end: end, percent: percent, taxLength: taxLength });
