@@ -82,6 +82,11 @@ var renderGraph = function renderGraph(graphData) {
   }).attr('y', 25).attr('width', function (d) {
     return xScale(d.taxLength);
   }).attr('height', 25);
+  var bracketLegend = innerFrame.selectAll('.percent').data(graphData).enter().append('text').attr('class', 'percent').attr('x', function (d) {
+    return xScale(d.start + (d.end - d.start) / 2);
+  }).attr('y', 10).text(function (d) {
+    return d.percent + '%';
+  }).style("text-anchor", "middle");
 };
 
 var graphData = processData(taxData, salary);
