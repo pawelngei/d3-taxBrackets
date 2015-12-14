@@ -88,14 +88,21 @@ var renderGraph = function renderGraph(graphData) {
     return xScale(d.taxLength);
   }).attr('height', 25);
   taxRects.exit().remove();
-  var bracketLegend = innerFrame.selectAll('.percent').data(graphData);
-  bracketLegend.enter().append('text');
-  bracketLegend.attr('class', 'percent').attr('x', function (d) {
+  var percentLegend = innerFrame.selectAll('.percent').data(graphData);
+  percentLegend.enter().append('text');
+  percentLegend.attr('class', 'percent').attr('x', function (d) {
     return xScale(d.start + (d.end - d.start) / 2);
   }).attr('y', 20).text(function (d) {
     return d.percent + '%';
   }).style("text-anchor", "middle");
-  bracketLegend.exit().remove();
+  percentLegend.exit().remove();
+  var bracketLegend = innerFrame.selectAll('.bracket-limit').data(graphData);
+  bracketLegend.enter().append('text');
+  bracketLegend.attr('class', 'bracket-limit').attr('x', function (d) {
+    return xScale(d.end);
+  }).attr('y', 90).text(function (d) {
+    return d.end + ' PLN';
+  }).style("text-anchor", "end");
 };
 
 var initGraph = function initGraph(salary) {

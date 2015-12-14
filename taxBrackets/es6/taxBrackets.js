@@ -94,17 +94,26 @@ let renderGraph = function renderGraph (graphData) {
         .attr('height', 25);
       taxRects
         .exit().remove();
-  let bracketLegend = innerFrame.selectAll('.percent').data(graphData)
-      bracketLegend
+  let percentLegend = innerFrame.selectAll('.percent').data(graphData)
+      percentLegend
         .enter().append('text')
-      bracketLegend
+      percentLegend
         .attr('class', 'percent')
         .attr('x', d => xScale(d.start + (d.end - d.start)/2))
         .attr('y', 20)
         .text(d => d.percent + '%')
         .style("text-anchor", "middle")
-      bracketLegend
+      percentLegend
         .exit().remove()
+  let bracketLegend = innerFrame.selectAll('.bracket-limit').data(graphData);
+      bracketLegend
+        .enter().append('text');
+      bracketLegend
+        .attr('class', 'bracket-limit')
+        .attr('x', d => xScale(d.end))
+        .attr('y', 90)
+        .text(d => d.end + ' PLN')
+        .style("text-anchor", "end")
 }
 
 let initGraph = function initGraph (salary) {
