@@ -66,3 +66,23 @@ frame.append('rect')
     .attr('height', 25)
     .attr('class', 'tax');
 
+let processData = function processData (taxBrackets, salary) {
+  // this is just a proof of concept, very ugly code
+  let graphData = [],
+      lastLimit = 0,
+      segmentLength;
+  for (let i = 0; i < taxBrackets.length; i++) {
+    if (salary > lastLimit) {
+      let start, end, percent, taxEnd;
+      start = graphData[graphData.length - 1]? graphData[graphData.length -1].end : 0;
+      end = salary < taxBrackets[i].limit ? salary : taxBrackets[i].limit;
+      percent = taxBrackets[i].taxValue;
+      taxEnd = Math.floor((end - start) * percent / 100);
+      graphData.push({start, end, percent, taxEnd});
+      lastLimit = taxBrackets[i].limit;
+    }
+  }
+  return graphData;
+}
+
+processData(taxData, salary);

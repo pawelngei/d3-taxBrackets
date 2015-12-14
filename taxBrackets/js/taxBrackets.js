@@ -44,3 +44,27 @@ var frame = svg.append('g').attr('transform', 'translate(' + margin.left + ',' +
 frame.append('rect').attr('x', 0).attr('y', 150).attr('width', xScale(salary)).attr('height', 25).attr('class', 'salary');
 
 frame.append('rect').attr('x', 0).attr('y', 125).attr('width', xScale(exampleTax)).attr('height', 25).attr('class', 'tax');
+
+var processData = function processData(taxBrackets, salary) {
+  // this is just a proof of concept, very ugly code
+  var graphData = [],
+      lastLimit = 0,
+      segmentLength = undefined;
+  for (var i = 0; i < taxBrackets.length; i++) {
+    if (salary > lastLimit) {
+      var start = undefined,
+          end = undefined,
+          percent = undefined,
+          taxEnd = undefined;
+      start = graphData[graphData.length - 1] ? graphData[graphData.length - 1].end : 0;
+      end = salary < taxBrackets[i].limit ? salary : taxBrackets[i].limit;
+      percent = taxBrackets[i].taxValue;
+      taxEnd = Math.floor((end - start) * percent / 100);
+      graphData.push({ start: start, end: end, percent: percent, taxEnd: taxEnd });
+      lastLimit = taxBrackets[i].limit;
+    }
+  }
+  return graphData;
+};
+
+processData(taxData, salary);
