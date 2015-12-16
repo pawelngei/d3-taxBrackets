@@ -52,46 +52,66 @@ class TaxBrackets {
     let salaryRects = this.innerFrame.selectAll('.salary')
           .data(graphData)
         salaryRects /* enter phase */
-          .enter().append('rect');
-        salaryRects /* update phase */
+          .enter().append('rect')
           .attr('class', 'salary')
-          .attr('x', d => xScale(d.start))
+          .attr('x', 0)
           .attr('y', 50)
-          .attr('width', d => xScale(d.end - d.start) - c.barMargin)
-          .attr('height', 25);
+          .attr('width', 0)
+          .attr('height', 25)
+        .transition().duration(c.animationTime)
+          .attr('x', d => xScale(d.start))
+          .attr('width', d => xScale(d.end - d.start) - c.barMargin);
+        salaryRects /* update phase */
+          .transition().duration(c.animationTime)
+          .attr('x', d => xScale(d.start))
+          .attr('width', d => xScale(d.end - d.start) - c.barMargin);
         salaryRects /* exit phase */
           .exit().remove();
     let taxRects = this.innerFrame.selectAll('.tax').data(graphData)
         taxRects
-          .enter().append('rect');
-        taxRects
+          .enter().append('rect')
           .attr('class', 'tax')
-          .attr('x', d => xScale(d.start))
+          .attr('x', 0)
           .attr('y', 25)
-          .attr('width', d=> xScale(d.taxLength))
-          .attr('height', 25);
+          .attr('width', 0)
+          .attr('height', 50)
+        .transition().duration(c.animationTime)
+          .attr('x', d => xScale(d.start))
+          .attr('width', d=> xScale(d.taxLength));
+        taxRects
+          .transition().duration(c.animationTime)
+          .attr('x', d => xScale(d.start))
+          .attr('width', d=> xScale(d.taxLength));
         taxRects
           .exit().remove();
     let percentLegend = this.innerFrame.selectAll('.percent').data(graphData)
         percentLegend
           .enter().append('text')
-        percentLegend
           .attr('class', 'percent')
-          .attr('x', d => xScale(d.start + (d.end - d.start)/2))
+          .attr('x', 0)
           .attr('y', 20)
           .text(d => d.percent + '%')
           .style("text-anchor", "middle")
+        .transition().duration(c.animationTime)
+          .attr('x', d => xScale(d.start + (d.end - d.start)/2))
+        percentLegend
+          .transition().duration(c.animationTime)
+          .attr('x', d => xScale(d.start + (d.end - d.start)/2))
         percentLegend
           .exit().remove()
     let bracketLegend = this.innerFrame.selectAll('.bracket-limit').data(graphData);
         bracketLegend
-          .enter().append('text');
-        bracketLegend
+          .enter().append('text')
           .attr('class', 'bracket-limit')
-          .attr('x', d => xScale(d.end))
+          .attr('x', 0)
           .attr('y', 90)
           .text(d => d.end + ' PLN')
           .style("text-anchor", "end")
+        .transition().duration(c.animationTime)
+          .attr('x', d => xScale(d.end))
+        bracketLegend
+          .transition().duration(c.animationTime)
+          .attr('x', d => xScale(d.end))
         bracketLegend
           .exit().remove()
   }
