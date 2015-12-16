@@ -64,7 +64,9 @@ var TaxBrackets = (function () {
 
       var salaryRects = this.innerFrame.selectAll('.salary').data(graphData);
       salaryRects /* enter phase */
-      .enter().append('rect').attr('class', 'salary').attr('x', 0).attr('y', 50).attr('width', 0).attr('height', 25).transition().duration(c.animationTime).attr('x', function (d) {
+      .enter().append('rect').attr('class', 'salary').attr('x', function (d) {
+        return xScale(d.start);
+      }).attr('y', 50).attr('width', 0).attr('height', 25).transition().duration(c.animationTime).attr('x', function (d) {
         return xScale(d.start);
       }).attr('width', function (d) {
         return xScale(d.end - d.start) - c.barMargin;
@@ -78,9 +80,9 @@ var TaxBrackets = (function () {
       salaryRects /* exit phase */
       .exit().transition().duration(c.animationTime / 2).attr('x', 0).attr('width', 0).remove();
       var taxRects = this.innerFrame.selectAll('.tax').data(graphData);
-      taxRects.enter().append('rect').attr('class', 'tax').attr('x', 0).attr('y', 25).attr('width', 0).attr('height', 50).transition().duration(c.animationTime).attr('x', function (d) {
+      taxRects.enter().append('rect').attr('class', 'tax').attr('x', function (d) {
         return xScale(d.start);
-      }).attr('width', function (d) {
+      }).attr('y', 25).attr('width', 0).attr('height', 50).transition().duration(c.animationTime).attr('width', function (d) {
         return xScale(d.taxLength);
       });
       taxRects.transition().duration(c.animationTime).attr('x', function (d) {
@@ -90,7 +92,9 @@ var TaxBrackets = (function () {
       });
       taxRects.exit().transition().duration(c.animationTime / 2).attr('x', 0).attr('width', 0).remove();
       var percentLegend = this.innerFrame.selectAll('.percent').data(graphData);
-      percentLegend.enter().append('text').attr('class', 'percent').attr('x', 0).attr('y', 20).text(function (d) {
+      percentLegend.enter().append('text').attr('class', 'percent').attr('x', function (d) {
+        return xScale(d.start);
+      }).attr('y', 20).text(function (d) {
         return d.percent + '%';
       }).style("text-anchor", "middle").transition().duration(c.animationTime).attr('x', function (d) {
         return xScale(d.start + (d.end - d.start) / 2);
@@ -100,12 +104,16 @@ var TaxBrackets = (function () {
       });
       percentLegend.exit().transition().duration(c.animationTime / 2).attr('x', 0).remove();
       var bracketLegend = this.innerFrame.selectAll('.bracket-limit').data(graphData);
-      bracketLegend.enter().append('text').attr('class', 'bracket-limit').attr('x', 0).attr('y', 90).text(function (d) {
+      bracketLegend.enter().append('text').attr('class', 'bracket-limit').attr('x', function (d) {
+        return xScale(d.start);
+      }).attr('y', 90).text(function (d) {
         return d.end + ' PLN';
       }).style("text-anchor", "end").transition().duration(c.animationTime).attr('x', function (d) {
         return xScale(d.end);
       });
-      bracketLegend.transition().duration(c.animationTime).attr('x', function (d) {
+      bracketLegend.transition().duration(c.animationTime).text(function (d) {
+        return d.end + ' PLN';
+      }).attr('x', function (d) {
         return xScale(d.end);
       });
       bracketLegend.exit().transition().duration(c.animationTime / 2).attr('x', 0).remove();

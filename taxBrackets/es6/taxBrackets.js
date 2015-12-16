@@ -54,7 +54,7 @@ class TaxBrackets {
         salaryRects /* enter phase */
           .enter().append('rect')
           .attr('class', 'salary')
-          .attr('x', 0)
+          .attr('x', d => xScale(d.start))
           .attr('y', 50)
           .attr('width', 0)
           .attr('height', 25)
@@ -75,12 +75,11 @@ class TaxBrackets {
         taxRects
           .enter().append('rect')
           .attr('class', 'tax')
-          .attr('x', 0)
+          .attr('x', d => xScale(d.start))
           .attr('y', 25)
           .attr('width', 0)
           .attr('height', 50)
         .transition().duration(c.animationTime)
-          .attr('x', d => xScale(d.start))
           .attr('width', d=> xScale(d.taxLength));
         taxRects
           .transition().duration(c.animationTime)
@@ -96,7 +95,7 @@ class TaxBrackets {
         percentLegend
           .enter().append('text')
           .attr('class', 'percent')
-          .attr('x', 0)
+          .attr('x', d => xScale(d.start))
           .attr('y', 20)
           .text(d => d.percent + '%')
           .style("text-anchor", "middle")
@@ -114,7 +113,7 @@ class TaxBrackets {
         bracketLegend
           .enter().append('text')
           .attr('class', 'bracket-limit')
-          .attr('x', 0)
+          .attr('x', d => xScale(d.start))
           .attr('y', 90)
           .text(d => d.end + ' PLN')
           .style("text-anchor", "end")
@@ -122,6 +121,7 @@ class TaxBrackets {
           .attr('x', d => xScale(d.end))
         bracketLegend
           .transition().duration(c.animationTime)
+          .text(d => d.end + ' PLN')
           .attr('x', d => xScale(d.end))
         bracketLegend
           .exit()
