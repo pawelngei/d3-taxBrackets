@@ -76,7 +76,7 @@ var TaxBrackets = (function () {
         return xScale(d.end - d.start) - c.barMargin;
       });
       salaryRects /* exit phase */
-      .exit().remove();
+      .exit().transition().duration(c.animationTime / 2).attr('x', 0).attr('width', 0).remove();
       var taxRects = this.innerFrame.selectAll('.tax').data(graphData);
       taxRects.enter().append('rect').attr('class', 'tax').attr('x', 0).attr('y', 25).attr('width', 0).attr('height', 50).transition().duration(c.animationTime).attr('x', function (d) {
         return xScale(d.start);
@@ -88,7 +88,7 @@ var TaxBrackets = (function () {
       }).attr('width', function (d) {
         return xScale(d.taxLength);
       });
-      taxRects.exit().remove();
+      taxRects.exit().transition().duration(c.animationTime / 2).attr('x', 0).attr('width', 0).remove();
       var percentLegend = this.innerFrame.selectAll('.percent').data(graphData);
       percentLegend.enter().append('text').attr('class', 'percent').attr('x', 0).attr('y', 20).text(function (d) {
         return d.percent + '%';
@@ -98,7 +98,7 @@ var TaxBrackets = (function () {
       percentLegend.transition().duration(c.animationTime).attr('x', function (d) {
         return xScale(d.start + (d.end - d.start) / 2);
       });
-      percentLegend.exit().remove();
+      percentLegend.exit().transition().duration(c.animationTime / 2).attr('x', 0).remove();
       var bracketLegend = this.innerFrame.selectAll('.bracket-limit').data(graphData);
       bracketLegend.enter().append('text').attr('class', 'bracket-limit').attr('x', 0).attr('y', 90).text(function (d) {
         return d.end + ' PLN';
@@ -108,7 +108,7 @@ var TaxBrackets = (function () {
       bracketLegend.transition().duration(c.animationTime).attr('x', function (d) {
         return xScale(d.end);
       });
-      bracketLegend.exit().remove();
+      bracketLegend.exit().transition().duration(c.animationTime / 2).attr('x', 0).remove();
     }
   }, {
     key: 'initGraph',
