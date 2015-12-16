@@ -28,14 +28,15 @@ class TaxBrackets {
         taxBrackets = this.taxSystem;
     for (let i = 0; i < taxBrackets.length; i++) {
       if (salary > lastLimit) {
-        let start, end, percent, taxLength;
+        let start, end, percent, taxLength, constant;
         start = graphData[graphData.length - 1]? graphData[graphData.length -1].end : 0;
         end = salary < taxBrackets[i].limit ? salary : taxBrackets[i].limit;
+        constant = taxBrackets[i].constant;
         // TODO: Refactor
         if (end < 0) {end = salary};
         percent = taxBrackets[i].taxValue;
         taxLength = Math.floor((end - start) * percent / 100);
-        graphData.push({start, end, percent, taxLength});
+        graphData.push({start, end, percent, taxLength, constant});
         lastLimit = taxBrackets[i].limit;
       }
     }
@@ -86,6 +87,26 @@ class TaxBrackets {
           .attr('x', d => xScale(d.start))
           .attr('width', d=> xScale(d.taxLength));
         taxRects
+          .exit()
+          .transition().duration(c.animationTime/2)
+          .attr('x', 0)
+          .attr('width', 0)
+          .remove();
+    let constRects = this.innerFrame.selectAll('.const').data(graphData)
+        constRects
+          .enter().append('rect')
+          .attr('class', 'const')
+          .attr('x', d => xScale(d.start))
+          .attr('y', 25)
+          .attr('width', 0)
+          .attr('height', 50)
+        .transition().duration(c.animationTime)
+          .attr('width', d=> xScale(d.constant))
+        constRects
+          .transition().duration(c.animationTime)
+          .attr('x', d => xScale(d.start))
+          .attr('width', d=> xScale(d.constant));
+        constRects
           .exit()
           .transition().duration(c.animationTime/2)
           .attr('x', 0)

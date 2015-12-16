@@ -37,16 +37,18 @@ var TaxBrackets = (function () {
           var start = undefined,
               end = undefined,
               percent = undefined,
-              taxLength = undefined;
+              taxLength = undefined,
+              constant = undefined;
           start = graphData[graphData.length - 1] ? graphData[graphData.length - 1].end : 0;
           end = salary < taxBrackets[i].limit ? salary : taxBrackets[i].limit;
+          constant = taxBrackets[i].constant;
           // TODO: Refactor
           if (end < 0) {
             end = salary;
           };
           percent = taxBrackets[i].taxValue;
           taxLength = Math.floor((end - start) * percent / 100);
-          graphData.push({ start: start, end: end, percent: percent, taxLength: taxLength });
+          graphData.push({ start: start, end: end, percent: percent, taxLength: taxLength, constant: constant });
           lastLimit = taxBrackets[i].limit;
         }
       }
@@ -91,6 +93,18 @@ var TaxBrackets = (function () {
         return xScale(d.taxLength);
       });
       taxRects.exit().transition().duration(c.animationTime / 2).attr('x', 0).attr('width', 0).remove();
+      var constRects = this.innerFrame.selectAll('.const').data(graphData);
+      constRects.enter().append('rect').attr('class', 'const').attr('x', function (d) {
+        return xScale(d.start);
+      }).attr('y', 25).attr('width', 0).attr('height', 50).transition().duration(c.animationTime).attr('width', function (d) {
+        return xScale(d.constant);
+      });
+      constRects.transition().duration(c.animationTime).attr('x', function (d) {
+        return xScale(d.start);
+      }).attr('width', function (d) {
+        return xScale(d.constant);
+      });
+      constRects.exit().transition().duration(c.animationTime / 2).attr('x', 0).attr('width', 0).remove();
       var percentLegend = this.innerFrame.selectAll('.percent').data(graphData);
       percentLegend.enter().append('text').attr('class', 'percent').attr('x', function (d) {
         return xScale(d.start);
