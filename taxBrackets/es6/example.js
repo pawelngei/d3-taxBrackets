@@ -31,14 +31,19 @@ let taxSystem = [
   }
 ];
 
+let taxSystem2 = [
+  {
+    limit: -1,
+    taxValue: 16,
+    constant: 0
+  }
+]
+
 // initGraph(16000);
 let tbInstance = new TaxBrackets(taxSystem);
 tbInstance.initGraph(16000);
 
 $('#salary').on('keyup', function (event) {
-  if (event.keyCode !== 13) {
-    return;
-  }
   let value = $('#salary').val();
   tbInstance.initGraph(value);
 })

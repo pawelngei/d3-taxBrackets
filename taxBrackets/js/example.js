@@ -26,14 +26,17 @@ var taxSystem = [{
   constant: 0
 }];
 
+var taxSystem2 = [{
+  limit: -1,
+  taxValue: 16,
+  constant: 0
+}];
+
 // initGraph(16000);
 var tbInstance = new TaxBrackets(taxSystem);
 tbInstance.initGraph(16000);
 
 $('#salary').on('keyup', function (event) {
-  if (event.keyCode !== 13) {
-    return;
-  }
   var value = $('#salary').val();
   tbInstance.initGraph(value);
 });
