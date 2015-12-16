@@ -40,6 +40,6 @@ $('#salary').on('keyup', function (event) {
     return;
   }
   let value = $('#salary').val();
-  initGraph(value);
+  tbInstance.initGraph(value);
 })
 

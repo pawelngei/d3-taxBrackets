@@ -35,5 +35,5 @@ $('#salary').on('keyup', function (event) {
     return;
   }
   var value = $('#salary').val();
-  initGraph(value);
+  tbInstance.initGraph(value);
 });

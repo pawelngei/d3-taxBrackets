@@ -6,13 +6,21 @@ class TaxBrackets {
       outerHeight: config && config.outerHeight ? config.outerHeight : 100,
       boxMargin: config && config.boxMargin ? config.boxMargin :
         { top: 0, right: 25, bottom: 0, left: 25},
-      barMargin: config && config.barMargin ? config.barMargin : 2
+      barMargin: config && config.barMargin ? config.barMargin : 2,
+      animationTime: config && config.animationTime ? config.animationTime : 1000
     }
     this.config.innerWidth = this.config.outerWidth - this.config.boxMargin.left - this.config.boxMargin.right;
     this.config.innerHeight = this.config.outerHeight - this.config.boxMargin.top - this.config.boxMargin.bottom;
     this.taxSystem = taxSystem;
+
+    let svg = d3.select('#taxBrackets')
+        .attr('width', this.config.outerWidth)
+        .attr('height', this.config.outerHeight);
+
+    this.innerFrame = svg.append('g')
+        .attr('transform', `translate(${this.config.boxMargin.left},${this.config.boxMargin.top})`);
   }
-  processData (salary) {
+  _processData (salary) {
     // this is just a proof of concept, very ugly code
     let graphData = [],
         lastLimit = 0,
@@ -33,7 +41,7 @@ class TaxBrackets {
     }
     return graphData;
   }
-  renderGraph (graphData) {
+  _renderGraph (graphData) {
     // create graphConfig object and unpack
     let c = this.config;
 
@@ -41,14 +49,8 @@ class TaxBrackets {
         // be ready to change to logscale with big values
         .domain([0, graphData[graphData.length -1].end]);
 
-    let svg = d3.select('#taxBrackets').append('svg')
-        .attr('width', c.outerWidth)
-        .attr('height', c.outerHeight);
-
-    let innerFrame = svg.append('g')
-        .attr('transform', `translate(${c.boxMargin.left},${c.boxMargin.top})`);
-
-    let salaryRects = innerFrame.selectAll('.salary').data(graphData)
+    let salaryRects = this.innerFrame.selectAll('.salary')
+          .data(graphData)
         salaryRects /* enter phase */
           .enter().append('rect');
         salaryRects /* update phase */
@@ -59,7 +61,7 @@ class TaxBrackets {
           .attr('height', 25);
         salaryRects /* exit phase */
           .exit().remove();
-    let taxRects = innerFrame.selectAll('.tax').data(graphData)
+    let taxRects = this.innerFrame.selectAll('.tax').data(graphData)
         taxRects
           .enter().append('rect');
         taxRects
@@ -70,7 +72,7 @@ class TaxBrackets {
           .attr('height', 25);
         taxRects
           .exit().remove();
-    let percentLegend = innerFrame.selectAll('.percent').data(graphData)
+    let percentLegend = this.innerFrame.selectAll('.percent').data(graphData)
         percentLegend
           .enter().append('text')
         percentLegend
@@ -81,7 +83,7 @@ class TaxBrackets {
           .style("text-anchor", "middle")
         percentLegend
           .exit().remove()
-    let bracketLegend = innerFrame.selectAll('.bracket-limit').data(graphData);
+    let bracketLegend = this.innerFrame.selectAll('.bracket-limit').data(graphData);
         bracketLegend
           .enter().append('text');
         bracketLegend
@@ -90,10 +92,12 @@ class TaxBrackets {
           .attr('y', 90)
           .text(d => d.end + ' PLN')
           .style("text-anchor", "end")
+        bracketLegend
+          .exit().remove()
   }
   initGraph (salary) {
-    let graphData = this.processData(salary);
-    this.renderGraph(graphData);
+    let graphData = this._processData(salary);
+    this._renderGraph(graphData);
   }
 }
 

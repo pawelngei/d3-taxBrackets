@@ -12,16 +12,21 @@ var TaxBrackets = (function () {
       outerWidth: config && config.outerWidth ? config.outerWidth : 1000,
       outerHeight: config && config.outerHeight ? config.outerHeight : 100,
       boxMargin: config && config.boxMargin ? config.boxMargin : { top: 0, right: 25, bottom: 0, left: 25 },
-      barMargin: config && config.barMargin ? config.barMargin : 2
+      barMargin: config && config.barMargin ? config.barMargin : 2,
+      animationTime: config && config.animationTime ? config.animationTime : 1000
     };
     this.config.innerWidth = this.config.outerWidth - this.config.boxMargin.left - this.config.boxMargin.right;
     this.config.innerHeight = this.config.outerHeight - this.config.boxMargin.top - this.config.boxMargin.bottom;
     this.taxSystem = taxSystem;
+
+    var svg = d3.select('#taxBrackets').attr('width', this.config.outerWidth).attr('height', this.config.outerHeight);
+
+    this.innerFrame = svg.append('g').attr('transform', 'translate(' + this.config.boxMargin.left + ',' + this.config.boxMargin.top + ')');
   }
 
   _createClass(TaxBrackets, [{
-    key: 'processData',
-    value: function processData(salary) {
+    key: '_processData',
+    value: function _processData(salary) {
       // this is just a proof of concept, very ugly code
       var graphData = [],
           lastLimit = 0,
@@ -48,8 +53,8 @@ var TaxBrackets = (function () {
       return graphData;
     }
   }, {
-    key: 'renderGraph',
-    value: function renderGraph(graphData) {
+    key: '_renderGraph',
+    value: function _renderGraph(graphData) {
       // create graphConfig object and unpack
       var c = this.config;
 
@@ -57,11 +62,7 @@ var TaxBrackets = (function () {
       // be ready to change to logscale with big values
       .domain([0, graphData[graphData.length - 1].end]);
 
-      var svg = d3.select('#taxBrackets').append('svg').attr('width', c.outerWidth).attr('height', c.outerHeight);
-
-      var innerFrame = svg.append('g').attr('transform', 'translate(' + c.boxMargin.left + ',' + c.boxMargin.top + ')');
-
-      var salaryRects = innerFrame.selectAll('.salary').data(graphData);
+      var salaryRects = this.innerFrame.selectAll('.salary').data(graphData);
       salaryRects /* enter phase */
       .enter().append('rect');
       salaryRects /* update phase */
@@ -72,7 +73,7 @@ var TaxBrackets = (function () {
       }).attr('height', 25);
       salaryRects /* exit phase */
       .exit().remove();
-      var taxRects = innerFrame.selectAll('.tax').data(graphData);
+      var taxRects = this.innerFrame.selectAll('.tax').data(graphData);
       taxRects.enter().append('rect');
       taxRects.attr('class', 'tax').attr('x', function (d) {
         return xScale(d.start);
@@ -80,7 +81,7 @@ var TaxBrackets = (function () {
         return xScale(d.taxLength);
       }).attr('height', 25);
       taxRects.exit().remove();
-      var percentLegend = innerFrame.selectAll('.percent').data(graphData);
+      var percentLegend = this.innerFrame.selectAll('.percent').data(graphData);
       percentLegend.enter().append('text');
       percentLegend.attr('class', 'percent').attr('x', function (d) {
         return xScale(d.start + (d.end - d.start) / 2);
@@ -88,19 +89,20 @@ var TaxBrackets = (function () {
         return d.percent + '%';
       }).style("text-anchor", "middle");
       percentLegend.exit().remove();
-      var bracketLegend = innerFrame.selectAll('.bracket-limit').data(graphData);
+      var bracketLegend = this.innerFrame.selectAll('.bracket-limit').data(graphData);
       bracketLegend.enter().append('text');
       bracketLegend.attr('class', 'bracket-limit').attr('x', function (d) {
         return xScale(d.end);
       }).attr('y', 90).text(function (d) {
         return d.end + ' PLN';
       }).style("text-anchor", "end");
+      bracketLegend.exit().remove();
     }
   }, {
     key: 'initGraph',
     value: function initGraph(salary) {
-      var graphData = this.processData(salary);
-      this.renderGraph(graphData);
+      var graphData = this._processData(salary);
+      this._renderGraph(graphData);
     }
   }]);
 
