@@ -14,6 +14,7 @@ class TaxBrackets {
 
     this.taxSystem = taxSystem;
 
+
     let svg = d3.select('#taxBrackets')
         .attr('width', this.config.outerWidth)
         .attr('height', this.config.outerHeight);
@@ -22,26 +23,24 @@ class TaxBrackets {
         .attr('transform', `translate(${this.config.boxMargin.left},${this.config.boxMargin.top})`);
 
   }
-  _processData (salary) {
+   _calculateDetailed (salary) {
     // this is just a proof of concept, very ugly code
     let graphData = [],
         lastLimit = 0,
         segmentLength,
         taxBrackets = this.taxSystem.brackets;
-    for (let i = 0; i < taxBrackets.length; i++) {
+    taxBrackets.forEach( (bracket, index) => {
       if (salary > lastLimit) {
-        let start, end, percent, taxLength, constant;
-        start = graphData[graphData.length - 1]? graphData[graphData.length -1].end : 0;
-        end = salary < taxBrackets[i].limit ? salary : taxBrackets[i].limit;
-        constant = taxBrackets[i].constant;
-        // TODO: Refactor
+        let start, end, percent, taxLength;
+        start = index > 0 ? graphData[graphData.length -1].end : 0;
+        end = salary < bracket.limit ? salary : bracket.limit;
         if (end < 0) {end = salary};
-        percent = taxBrackets[i].taxValue;
+        percent = bracket.taxValue;
         taxLength = Math.floor((end - start) * percent / 100);
-        graphData.push({start, end, percent, taxLength, constant});
-        lastLimit = taxBrackets[i].limit;
+        graphData.push({start, end, percent, taxLength});
+        lastLimit = bracket.limit;
       }
-    }
+    })
     return graphData;
   }
   _renderGraph (graphData) {
@@ -92,26 +91,6 @@ class TaxBrackets {
           .transition().duration(c.animationTime/2)
           .attr('width', 0)
           .remove();
-    let constRects = this.innerFrame.selectAll('.const').data(graphData)
-        constRects
-          .enter().append('rect')
-          .attr('class', 'const')
-          .attr('x', d => xScale(d.start))
-          .attr('y', 25)
-          .attr('width', 0)
-          .attr('height', 50)
-        .transition().duration(c.animationTime)
-          .attr('width', d=> xScale(d.constant))
-        constRects
-          .transition().duration(c.animationTime)
-          .attr('x', d => xScale(d.start))
-          .attr('width', d=> xScale(d.constant));
-        constRects
-          .exit()
-          .transition().duration(c.animationTime/2)
-          .attr('x', 0)
-          .attr('width', 0)
-          .remove();
     let percentLegend = this.innerFrame.selectAll('.percent').data(graphData)
         percentLegend
           .enter().append('text')
@@ -151,7 +130,7 @@ class TaxBrackets {
           .remove();
   }
   initGraph (salary) {
-    let graphData = this._processData(salary);
+    let graphData = this. _calculateDetailed(salary);
     this._renderGraph(graphData);
   }
 }
