@@ -17,6 +17,7 @@ var TaxBrackets = (function () {
     };
     this.config.innerWidth = this.config.outerWidth - this.config.boxMargin.left - this.config.boxMargin.right;
     this.config.innerHeight = this.config.outerHeight - this.config.boxMargin.top - this.config.boxMargin.bottom;
+
     this.taxSystem = taxSystem;
 
     var svg = d3.select('#taxBrackets').attr('width', this.config.outerWidth).attr('height', this.config.outerHeight);
@@ -31,7 +32,7 @@ var TaxBrackets = (function () {
       var graphData = [],
           lastLimit = 0,
           segmentLength = undefined,
-          taxBrackets = this.taxSystem;
+          taxBrackets = this.taxSystem.brackets;
       for (var i = 0; i < taxBrackets.length; i++) {
         if (salary > lastLimit) {
           var start = undefined,
@@ -80,7 +81,7 @@ var TaxBrackets = (function () {
         return xScale(d.end - d.start) - c.barMargin;
       });
       salaryRects /* exit phase */
-      .exit().transition().duration(c.animationTime / 2).attr('x', 0).attr('width', 0).remove();
+      .exit().transition().duration(c.animationTime / 2).attr('width', 0).remove();
       var taxRects = this.innerFrame.selectAll('.tax').data(graphData);
       taxRects.enter().append('rect').attr('class', 'tax').attr('x', function (d) {
         return xScale(d.start);
@@ -92,7 +93,7 @@ var TaxBrackets = (function () {
       }).attr('width', function (d) {
         return xScale(d.taxLength);
       });
-      taxRects.exit().transition().duration(c.animationTime / 2).attr('x', 0).attr('width', 0).remove();
+      taxRects.exit().transition().duration(c.animationTime / 2).attr('width', 0).remove();
       var constRects = this.innerFrame.selectAll('.const').data(graphData);
       constRects.enter().append('rect').attr('class', 'const').attr('x', function (d) {
         return xScale(d.start);

@@ -11,6 +11,7 @@ class TaxBrackets {
     }
     this.config.innerWidth = this.config.outerWidth - this.config.boxMargin.left - this.config.boxMargin.right;
     this.config.innerHeight = this.config.outerHeight - this.config.boxMargin.top - this.config.boxMargin.bottom;
+
     this.taxSystem = taxSystem;
 
     let svg = d3.select('#taxBrackets')
@@ -19,13 +20,14 @@ class TaxBrackets {
 
     this.innerFrame = svg.append('g')
         .attr('transform', `translate(${this.config.boxMargin.left},${this.config.boxMargin.top})`);
+
   }
   _processData (salary) {
     // this is just a proof of concept, very ugly code
     let graphData = [],
         lastLimit = 0,
         segmentLength,
-        taxBrackets = this.taxSystem;
+        taxBrackets = this.taxSystem.brackets;
     for (let i = 0; i < taxBrackets.length; i++) {
       if (salary > lastLimit) {
         let start, end, percent, taxLength, constant;
@@ -69,7 +71,6 @@ class TaxBrackets {
         salaryRects /* exit phase */
           .exit()
           .transition().duration(c.animationTime/2)
-          .attr('x', 0)
           .attr('width', 0)
           .remove();
     let taxRects = this.innerFrame.selectAll('.tax').data(graphData)
@@ -89,7 +90,6 @@ class TaxBrackets {
         taxRects
           .exit()
           .transition().duration(c.animationTime/2)
-          .attr('x', 0)
           .attr('width', 0)
           .remove();
     let constRects = this.innerFrame.selectAll('.const').data(graphData)
