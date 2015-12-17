@@ -3,9 +3,9 @@ class TaxBrackets {
   constructor (taxSystems, config) {
     this.config = {
       outerWidth: config && config.outerWidth ? config.outerWidth : 1000,
-      outerHeight: config && config.outerHeight ? config.outerHeight : 100,
+      outerHeight: config && config.outerHeight ? config.outerHeight : 125,
       boxMargin: config && config.boxMargin ? config.boxMargin :
-        { top: 0, right: 25, bottom: 0, left: 25},
+        { top: 25, right: 25, bottom: 0, left: 25},
       barMargin: config && config.barMargin ? config.barMargin : 2,
       animationTime: config && config.animationTime ? config.animationTime : 1000,
       defaultView: 'overall'
@@ -27,6 +27,12 @@ class TaxBrackets {
           topMargin = this.config.boxMargin.top + this.config.outerHeight * index;
       let thisFrame = svg.append('g')
           .attr('transform', `translate(${leftMargin},${topMargin})`);
+      thisFrame.append('text')
+          .attr('class', 'system-name')
+          .attr('x', 0)
+          .attr('y', 0)
+          .text(taxSystem.name)
+          .style("text-anchor", "start")
       this.innerFrames.push(thisFrame);
     })
 

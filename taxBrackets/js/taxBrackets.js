@@ -12,8 +12,8 @@ var TaxBrackets = (function () {
 
     this.config = {
       outerWidth: config && config.outerWidth ? config.outerWidth : 1000,
-      outerHeight: config && config.outerHeight ? config.outerHeight : 100,
-      boxMargin: config && config.boxMargin ? config.boxMargin : { top: 0, right: 25, bottom: 0, left: 25 },
+      outerHeight: config && config.outerHeight ? config.outerHeight : 125,
+      boxMargin: config && config.boxMargin ? config.boxMargin : { top: 25, right: 25, bottom: 0, left: 25 },
       barMargin: config && config.barMargin ? config.barMargin : 2,
       animationTime: config && config.animationTime ? config.animationTime : 1000,
       defaultView: 'overall'
@@ -32,6 +32,7 @@ var TaxBrackets = (function () {
       var leftMargin = _this.config.boxMargin.left,
           topMargin = _this.config.boxMargin.top + _this.config.outerHeight * index;
       var thisFrame = svg.append('g').attr('transform', 'translate(' + leftMargin + ',' + topMargin + ')');
+      thisFrame.append('text').attr('class', 'system-name').attr('x', 0).attr('y', 0).text(taxSystem.name).style("text-anchor", "start");
       _this.innerFrames.push(thisFrame);
     });
   }
