@@ -146,8 +146,21 @@ var TaxBrackets = (function () {
   }, {
     key: 'initGraph',
     value: function initGraph(salary) {
+      this.salary = salary;
       // let graphData = this. _calculateDetailed(salary);
       var graphData = this._calculateOverall(salary);
+      this._renderGraph(graphData);
+    }
+  }, {
+    key: 'showOverall',
+    value: function showOverall() {
+      var graphData = this._calculateOverall(this.salary);
+      this._renderGraph(graphData);
+    }
+  }, {
+    key: 'showDetailed',
+    value: function showDetailed() {
+      var graphData = this._calculateDetailed(this.salary);
       this._renderGraph(graphData);
     }
   }]);

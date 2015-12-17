@@ -68,8 +68,15 @@ let taxNowoczesna = {
 let tbInstance = new TaxBrackets(taxCurrent);
 tbInstance.initGraph(16000);
 
-$('#salary').on('keyup', function (event) {
+$('#salary').on('keyup', event => {
   let value = $('#salary').val();
   tbInstance.initGraph(value);
 })
 
+$('#overall').on('click', event => {
+  tbInstance.showOverall();
+})
+
+$('#detailed').on('click', event => {
+  tbInstance.showDetailed();
+})

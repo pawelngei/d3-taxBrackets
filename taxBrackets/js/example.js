@@ -60,3 +60,11 @@ $('#salary').on('keyup', function (event) {
   var value = $('#salary').val();
   tbInstance.initGraph(value);
 });
+
+$('#overall').on('click', function (event) {
+  tbInstance.showOverall();
+});
+
+$('#detailed').on('click', function (event) {
+  tbInstance.showDetailed();
+});
