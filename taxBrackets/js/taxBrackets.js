@@ -39,7 +39,7 @@ var TaxBrackets = (function () {
               end = undefined,
               percent = undefined,
               taxLength = undefined;
-          start = index > 0 ? graphData[graphData.length - 1].end : 0;
+          start = index === 0 ? 0 : graphData[graphData.length - 1].end;
           end = salary < bracket.limit ? salary : bracket.limit;
           if (end < 0) {
             end = salary;
@@ -51,6 +51,29 @@ var TaxBrackets = (function () {
         }
       });
       return graphData;
+    }
+  }, {
+    key: '_calculateOverall',
+    value: function _calculateOverall(salary) {
+      var lastLimit = 0,
+          taxBrackets = this.taxSystem.brackets,
+          start = 0,
+          end = salary,
+          percent = undefined,
+          taxLength = 0;
+      taxBrackets.forEach(function (bracket, index) {
+        if (salary > lastLimit) {
+          var bracketStart = index === 0 ? 0 : taxBrackets[index - 1].limit;
+          var bracketEnd = salary < bracket.limit ? salary : bracket.limit;
+          if (bracketEnd < 0) {
+            bracketEnd = salary;
+          };
+          taxLength += Math.floor((bracketEnd - bracketStart) * bracket.taxValue / 100);
+          lastLimit = bracket.limit;
+        }
+      });
+      percent = Math.round(taxLength / salary * 10000) / 100;
+      return [{ start: start, end: end, percent: percent, taxLength: taxLength }];
     }
   }, {
     key: '_renderGraph',
@@ -99,7 +122,9 @@ var TaxBrackets = (function () {
       }).style("text-anchor", "middle").transition().duration(c.animationTime).attr('x', function (d) {
         return xScale(d.start + (d.end - d.start) / 2);
       });
-      percentLegend.transition().duration(c.animationTime).attr('x', function (d) {
+      percentLegend.transition().duration(c.animationTime).text(function (d) {
+        return d.percent + '%';
+      }).attr('x', function (d) {
         return xScale(d.start + (d.end - d.start) / 2);
       });
       percentLegend.exit().transition().duration(c.animationTime / 2).attr('x', 0).remove();
@@ -121,7 +146,8 @@ var TaxBrackets = (function () {
   }, {
     key: 'initGraph',
     value: function initGraph(salary) {
-      var graphData = this._calculateDetailed(salary);
+      // let graphData = this. _calculateDetailed(salary);
+      var graphData = this._calculateOverall(salary);
       this._renderGraph(graphData);
     }
   }]);

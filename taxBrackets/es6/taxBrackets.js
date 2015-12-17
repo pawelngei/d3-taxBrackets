@@ -32,7 +32,7 @@ class TaxBrackets {
     taxBrackets.forEach( (bracket, index) => {
       if (salary > lastLimit) {
         let start, end, percent, taxLength;
-        start = index > 0 ? graphData[graphData.length -1].end : 0;
+        start = index === 0 ? 0 : graphData[graphData.length -1].end;
         end = salary < bracket.limit ? salary : bracket.limit;
         if (end < 0) {end = salary};
         percent = bracket.taxValue;
@@ -42,6 +42,25 @@ class TaxBrackets {
       }
     })
     return graphData;
+  }
+  _calculateOverall (salary) {
+    let lastLimit = 0,
+        taxBrackets = this.taxSystem.brackets,
+        start = 0,
+        end = salary,
+        percent,
+        taxLength = 0;
+    taxBrackets.forEach( (bracket, index) => {
+      if (salary > lastLimit) {
+        let bracketStart = index === 0 ? 0 : taxBrackets[index - 1].limit;
+        let bracketEnd = salary < bracket.limit ? salary : bracket.limit;
+        if (bracketEnd < 0) {bracketEnd = salary};
+        taxLength += Math.floor((bracketEnd - bracketStart) * bracket.taxValue / 100);
+        lastLimit = bracket.limit;
+      }
+    })
+    percent = Math.round(taxLength / salary * 10000)/100;
+    return [{start, end, percent, taxLength}];
   }
   _renderGraph (graphData) {
     // create graphConfig object and unpack
@@ -103,6 +122,7 @@ class TaxBrackets {
           .attr('x', d => xScale(d.start + (d.end - d.start)/2))
         percentLegend
           .transition().duration(c.animationTime)
+          .text(d => d.percent + '%')
           .attr('x', d => xScale(d.start + (d.end - d.start)/2))
         percentLegend
           .exit()
@@ -130,7 +150,8 @@ class TaxBrackets {
           .remove();
   }
   initGraph (salary) {
-    let graphData = this. _calculateDetailed(salary);
+    // let graphData = this. _calculateDetailed(salary);
+    let graphData = this. _calculateOverall(salary);
     this._renderGraph(graphData);
   }
 }
