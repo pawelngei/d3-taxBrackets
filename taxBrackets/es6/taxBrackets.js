@@ -151,9 +151,7 @@ class TaxBrackets {
   }
   initGraph (salary) {
     this.salary = salary;
-    // let graphData = this. _calculateDetailed(salary);
-    let graphData = this._calculateOverall(salary);
-    this._renderGraph(graphData);
+    this.showOverall()
   }
   showOverall () {
     let graphData = this._calculateOverall(this.salary);

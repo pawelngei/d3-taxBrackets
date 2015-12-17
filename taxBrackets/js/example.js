@@ -52,8 +52,7 @@ var taxNowoczesna = {
   }]
 };
 
-// initGraph(16000);
-var tbInstance = new TaxBrackets(taxCurrent);
+var tbInstance = new TaxBrackets(taxRazem);
 tbInstance.initGraph(16000);
 
 $('#salary').on('keyup', function (event) {

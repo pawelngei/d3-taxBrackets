@@ -147,9 +147,7 @@ var TaxBrackets = (function () {
     key: 'initGraph',
     value: function initGraph(salary) {
       this.salary = salary;
-      // let graphData = this. _calculateDetailed(salary);
-      var graphData = this._calculateOverall(salary);
-      this._renderGraph(graphData);
+      this.showOverall();
     }
   }, {
     key: 'showOverall',

@@ -64,8 +64,7 @@ let taxNowoczesna = {
   ]
 }
 
-// initGraph(16000);
-let tbInstance = new TaxBrackets(taxCurrent);
+let tbInstance = new TaxBrackets(taxRazem);
 tbInstance.initGraph(16000);
 
 $('#salary').on('keyup', event => {
