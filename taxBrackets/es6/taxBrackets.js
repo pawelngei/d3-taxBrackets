@@ -1,6 +1,6 @@
 
 class TaxBrackets {
-  constructor (taxSystem, config) {
+  constructor (taxSystems, config) {
     this.config = {
       outerWidth: config && config.outerWidth ? config.outerWidth : 1000,
       outerHeight: config && config.outerHeight ? config.outerHeight : 100,
@@ -12,23 +12,27 @@ class TaxBrackets {
     this.config.innerWidth = this.config.outerWidth - this.config.boxMargin.left - this.config.boxMargin.right;
     this.config.innerHeight = this.config.outerHeight - this.config.boxMargin.top - this.config.boxMargin.bottom;
 
-    this.taxSystem = taxSystem;
-
+    this.taxSystems = taxSystems;
+    this.innerFrames = [];
 
     let svg = d3.select('#taxBrackets')
         .attr('width', this.config.outerWidth)
-        .attr('height', this.config.outerHeight);
+        .attr('height', this.config.outerHeight * this.taxSystems.length);
 
-    this.innerFrame = svg.append('g')
-        .attr('transform', `translate(${this.config.boxMargin.left},${this.config.boxMargin.top})`);
+    this.taxSystems.forEach( (taxSystem, index) => {
+      let leftMargin = this.config.boxMargin.left,
+          topMargin = this.config.boxMargin.top + this.config.outerHeight * index;
+      let thisFrame = svg.append('g')
+          .attr('transform', `translate(${leftMargin},${topMargin})`);
+      this.innerFrames.push(thisFrame);
+    })
 
   }
-   _calculateDetailed (salary) {
+   _calculateDetailed (taxBrackets, salary) {
     // this is just a proof of concept, very ugly code
     let graphData = [],
         lastLimit = 0,
-        segmentLength,
-        taxBrackets = this.taxSystem.brackets;
+        segmentLength;
     taxBrackets.forEach( (bracket, index) => {
       if (salary > lastLimit) {
         let start, end, percent, taxLength;
@@ -43,9 +47,8 @@ class TaxBrackets {
     })
     return graphData;
   }
-  _calculateOverall (salary) {
+  _calculateOverall (taxBrackets, salary) {
     let lastLimit = 0,
-        taxBrackets = this.taxSystem.brackets,
         start = 0,
         end = salary,
         percent,
@@ -62,7 +65,7 @@ class TaxBrackets {
     percent = Math.round(taxLength / salary * 10000)/100;
     return [{start, end, percent, taxLength}];
   }
-  _renderGraph (graphData) {
+  _renderGraph (thisFrame, graphData) {
     // create graphConfig object and unpack
     let c = this.config;
 
@@ -70,7 +73,7 @@ class TaxBrackets {
         // be ready to change to logscale with big values
         .domain([0, graphData[graphData.length -1].end]);
 
-    let salaryRects = this.innerFrame.selectAll('.salary')
+    let salaryRects = thisFrame.selectAll('.salary')
           .data(graphData)
         salaryRects /* enter phase */
           .enter().append('rect')
@@ -91,7 +94,7 @@ class TaxBrackets {
           .transition().duration(c.animationTime/2)
           .attr('width', 0)
           .remove();
-    let taxRects = this.innerFrame.selectAll('.tax').data(graphData)
+    let taxRects = thisFrame.selectAll('.tax').data(graphData)
         taxRects
           .enter().append('rect')
           .attr('class', 'tax')
@@ -110,7 +113,7 @@ class TaxBrackets {
           .transition().duration(c.animationTime/2)
           .attr('width', 0)
           .remove();
-    let percentLegend = this.innerFrame.selectAll('.percent').data(graphData)
+    let percentLegend = thisFrame.selectAll('.percent').data(graphData)
         percentLegend
           .enter().append('text')
           .attr('class', 'percent')
@@ -129,7 +132,7 @@ class TaxBrackets {
           .transition().duration(c.animationTime/2)
           .attr('x', 0)
           .remove();
-    let bracketLegend = this.innerFrame.selectAll('.bracket-limit').data(graphData);
+    let bracketLegend = thisFrame.selectAll('.bracket-limit').data(graphData);
         bracketLegend
           .enter().append('text')
           .attr('class', 'bracket-limit')
@@ -154,12 +157,20 @@ class TaxBrackets {
     this.showOverall()
   }
   showOverall () {
-    let graphData = this._calculateOverall(this.salary);
-    this._renderGraph(graphData)
+    this.innerFrames.forEach( (_, index) => {
+      let graphData = this._calculateOverall(
+        this.taxSystems[index].brackets, this.salary
+      );
+      this._renderGraph(this.innerFrames[index], graphData)
+    })
   }
   showDetailed () {
-    let graphData = this._calculateDetailed(this.salary);
-    this._renderGraph(graphData)
+    this.innerFrames.forEach( (_, index) => {
+      let graphData = this._calculateDetailed(
+        this.taxSystems[index].brackets, this.salary
+      );
+      this._renderGraph(this.innerFrames[index], graphData)
+    })
   }
 }
 

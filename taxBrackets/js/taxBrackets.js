@@ -5,7 +5,9 @@ var _createClass = (function () { function defineProperties(target, props) { for
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
 var TaxBrackets = (function () {
-  function TaxBrackets(taxSystem, config) {
+  function TaxBrackets(taxSystems, config) {
+    var _this = this;
+
     _classCallCheck(this, TaxBrackets);
 
     this.config = {
@@ -18,21 +20,26 @@ var TaxBrackets = (function () {
     this.config.innerWidth = this.config.outerWidth - this.config.boxMargin.left - this.config.boxMargin.right;
     this.config.innerHeight = this.config.outerHeight - this.config.boxMargin.top - this.config.boxMargin.bottom;
 
-    this.taxSystem = taxSystem;
+    this.taxSystems = taxSystems;
+    this.innerFrames = [];
 
-    var svg = d3.select('#taxBrackets').attr('width', this.config.outerWidth).attr('height', this.config.outerHeight);
+    var svg = d3.select('#taxBrackets').attr('width', this.config.outerWidth).attr('height', this.config.outerHeight * this.taxSystems.length);
 
-    this.innerFrame = svg.append('g').attr('transform', 'translate(' + this.config.boxMargin.left + ',' + this.config.boxMargin.top + ')');
+    this.taxSystems.forEach(function (taxSystem, index) {
+      var leftMargin = _this.config.boxMargin.left,
+          topMargin = _this.config.boxMargin.top + _this.config.outerHeight * index;
+      var thisFrame = svg.append('g').attr('transform', 'translate(' + leftMargin + ',' + topMargin + ')');
+      _this.innerFrames.push(thisFrame);
+    });
   }
 
   _createClass(TaxBrackets, [{
     key: '_calculateDetailed',
-    value: function _calculateDetailed(salary) {
+    value: function _calculateDetailed(taxBrackets, salary) {
       // this is just a proof of concept, very ugly code
       var graphData = [],
           lastLimit = 0,
-          segmentLength = undefined,
-          taxBrackets = this.taxSystem.brackets;
+          segmentLength = undefined;
       taxBrackets.forEach(function (bracket, index) {
         if (salary > lastLimit) {
           var start = undefined,
@@ -54,9 +61,8 @@ var TaxBrackets = (function () {
     }
   }, {
     key: '_calculateOverall',
-    value: function _calculateOverall(salary) {
+    value: function _calculateOverall(taxBrackets, salary) {
       var lastLimit = 0,
-          taxBrackets = this.taxSystem.brackets,
           start = 0,
           end = salary,
           percent = undefined,
@@ -77,7 +83,7 @@ var TaxBrackets = (function () {
     }
   }, {
     key: '_renderGraph',
-    value: function _renderGraph(graphData) {
+    value: function _renderGraph(thisFrame, graphData) {
       // create graphConfig object and unpack
       var c = this.config;
 
@@ -85,7 +91,7 @@ var TaxBrackets = (function () {
       // be ready to change to logscale with big values
       .domain([0, graphData[graphData.length - 1].end]);
 
-      var salaryRects = this.innerFrame.selectAll('.salary').data(graphData);
+      var salaryRects = thisFrame.selectAll('.salary').data(graphData);
       salaryRects /* enter phase */
       .enter().append('rect').attr('class', 'salary').attr('x', function (d) {
         return xScale(d.start);
@@ -102,7 +108,7 @@ var TaxBrackets = (function () {
       });
       salaryRects /* exit phase */
       .exit().transition().duration(c.animationTime / 2).attr('width', 0).remove();
-      var taxRects = this.innerFrame.selectAll('.tax').data(graphData);
+      var taxRects = thisFrame.selectAll('.tax').data(graphData);
       taxRects.enter().append('rect').attr('class', 'tax').attr('x', function (d) {
         return xScale(d.start);
       }).attr('y', 25).attr('width', 0).attr('height', 50).transition().duration(c.animationTime).attr('width', function (d) {
@@ -114,7 +120,7 @@ var TaxBrackets = (function () {
         return xScale(d.taxLength);
       });
       taxRects.exit().transition().duration(c.animationTime / 2).attr('width', 0).remove();
-      var percentLegend = this.innerFrame.selectAll('.percent').data(graphData);
+      var percentLegend = thisFrame.selectAll('.percent').data(graphData);
       percentLegend.enter().append('text').attr('class', 'percent').attr('x', function (d) {
         return xScale(d.start);
       }).attr('y', 20).text(function (d) {
@@ -128,7 +134,7 @@ var TaxBrackets = (function () {
         return xScale(d.start + (d.end - d.start) / 2);
       });
       percentLegend.exit().transition().duration(c.animationTime / 2).attr('x', 0).remove();
-      var bracketLegend = this.innerFrame.selectAll('.bracket-limit').data(graphData);
+      var bracketLegend = thisFrame.selectAll('.bracket-limit').data(graphData);
       bracketLegend.enter().append('text').attr('class', 'bracket-limit').attr('x', function (d) {
         return xScale(d.start);
       }).attr('y', 90).text(function (d) {
@@ -152,14 +158,22 @@ var TaxBrackets = (function () {
   }, {
     key: 'showOverall',
     value: function showOverall() {
-      var graphData = this._calculateOverall(this.salary);
-      this._renderGraph(graphData);
+      var _this2 = this;
+
+      this.innerFrames.forEach(function (_, index) {
+        var graphData = _this2._calculateOverall(_this2.taxSystems[index].brackets, _this2.salary);
+        _this2._renderGraph(_this2.innerFrames[index], graphData);
+      });
     }
   }, {
     key: 'showDetailed',
     value: function showDetailed() {
-      var graphData = this._calculateDetailed(this.salary);
-      this._renderGraph(graphData);
+      var _this3 = this;
+
+      this.innerFrames.forEach(function (_, index) {
+        var graphData = _this3._calculateDetailed(_this3.taxSystems[index].brackets, _this3.salary);
+        _this3._renderGraph(_this3.innerFrames[index], graphData);
+      });
     }
   }]);
 
