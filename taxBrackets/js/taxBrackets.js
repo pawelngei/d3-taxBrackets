@@ -15,10 +15,13 @@ var TaxBrackets = (function () {
       outerHeight: config && config.outerHeight ? config.outerHeight : 100,
       boxMargin: config && config.boxMargin ? config.boxMargin : { top: 0, right: 25, bottom: 0, left: 25 },
       barMargin: config && config.barMargin ? config.barMargin : 2,
-      animationTime: config && config.animationTime ? config.animationTime : 1000
+      animationTime: config && config.animationTime ? config.animationTime : 1000,
+      defaultView: 'overall'
     };
     this.config.innerWidth = this.config.outerWidth - this.config.boxMargin.left - this.config.boxMargin.right;
     this.config.innerHeight = this.config.outerHeight - this.config.boxMargin.top - this.config.boxMargin.bottom;
+    this.viewFuncDict = { 'overall': this.showOverall, 'detailed': this.showDetailed };
+    this.lastViewFunction = this.viewFuncDict[this.config.defaultView];
 
     this.taxSystems = taxSystems;
     this.innerFrames = [];
@@ -152,14 +155,16 @@ var TaxBrackets = (function () {
   }, {
     key: 'initGraph',
     value: function initGraph(salary) {
+      // console.log('initGraph', )
       this.salary = salary;
-      this.showOverall();
+      this.lastViewFunction();
     }
   }, {
     key: 'showOverall',
     value: function showOverall() {
       var _this2 = this;
 
+      this.lastViewFunction = this.viewFuncDict['overall'];
       this.innerFrames.forEach(function (_, index) {
         var graphData = _this2._calculateOverall(_this2.taxSystems[index].brackets, _this2.salary);
         _this2._renderGraph(_this2.innerFrames[index], graphData);
@@ -170,6 +175,7 @@ var TaxBrackets = (function () {
     value: function showDetailed() {
       var _this3 = this;
 
+      this.lastViewFunction = this.viewFuncDict['detailed'];
       this.innerFrames.forEach(function (_, index) {
         var graphData = _this3._calculateDetailed(_this3.taxSystems[index].brackets, _this3.salary);
         _this3._renderGraph(_this3.innerFrames[index], graphData);

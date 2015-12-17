@@ -7,10 +7,13 @@ class TaxBrackets {
       boxMargin: config && config.boxMargin ? config.boxMargin :
         { top: 0, right: 25, bottom: 0, left: 25},
       barMargin: config && config.barMargin ? config.barMargin : 2,
-      animationTime: config && config.animationTime ? config.animationTime : 1000
+      animationTime: config && config.animationTime ? config.animationTime : 1000,
+      defaultView: 'overall'
     }
     this.config.innerWidth = this.config.outerWidth - this.config.boxMargin.left - this.config.boxMargin.right;
     this.config.innerHeight = this.config.outerHeight - this.config.boxMargin.top - this.config.boxMargin.bottom;
+    this.viewFuncDict = {'overall': this.showOverall, 'detailed': this.showDetailed}
+    this.lastViewFunction = this.viewFuncDict[this.config.defaultView];
 
     this.taxSystems = taxSystems;
     this.innerFrames = [];
@@ -153,10 +156,12 @@ class TaxBrackets {
           .remove();
   }
   initGraph (salary) {
+    // console.log('initGraph', )
     this.salary = salary;
-    this.showOverall()
+    this.lastViewFunction();
   }
   showOverall () {
+    this.lastViewFunction = this.viewFuncDict['overall'];
     this.innerFrames.forEach( (_, index) => {
       let graphData = this._calculateOverall(
         this.taxSystems[index].brackets, this.salary
@@ -165,6 +170,7 @@ class TaxBrackets {
     })
   }
   showDetailed () {
+    this.lastViewFunction = this.viewFuncDict['detailed'];
     this.innerFrames.forEach( (_, index) => {
       let graphData = this._calculateDetailed(
         this.taxSystems[index].brackets, this.salary
