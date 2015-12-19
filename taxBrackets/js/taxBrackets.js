@@ -38,52 +38,63 @@ var TaxBrackets = (function () {
   }
 
   _createClass(TaxBrackets, [{
-    key: '_calculateDetailed',
-    value: function _calculateDetailed(taxBrackets, salary) {
-      // this is just a proof of concept, very ugly code
-      var graphData = [],
+    key: '_calculateGraphData',
+    value: function _calculateGraphData(taxBrackets, salary) {
+      var bracketList = [],
           lastLimit = 0,
-          segmentLength = undefined;
-      taxBrackets.forEach(function (bracket, index) {
+          totalTax = 0,
+          netSalary = 0,
+          totalPercent = 0;
+      taxBrackets.forEach(function (bracket, i) {
         if (salary > lastLimit) {
           var start = undefined,
               end = undefined,
               percent = undefined,
-              taxLength = undefined;
-          start = index === 0 ? 0 : graphData[graphData.length - 1].end;
+              bracketLength = undefined,
+              taxLength = undefined,
+              netLength = undefined;
+          start = i === 0 ? 0 : bracketList[bracketList.length - 1].end;
           end = salary < bracket.limit ? salary : bracket.limit;
           if (end < 0) {
             end = salary;
           };
           percent = bracket.taxValue;
-          taxLength = Math.floor((end - start) * percent / 100);
-          graphData.push({ start: start, end: end, percent: percent, taxLength: taxLength });
+          bracketLength = end - start;
+          taxLength = Math.round(bracketLength * percent) / 100; /* 2 sign digits*/
+          netLength = bracketLength - taxLength;
+          bracketList.push({ start: start, end: end, percent: percent, bracketLength: bracketLength, taxLength: taxLength, netLength: netLength });
           lastLimit = bracket.limit;
         }
       });
-      return graphData;
+      bracketList.forEach(function (bracket, i) {
+        totalTax += bracket.taxLength;
+        netSalary += bracket.netLength;
+      });
+      totalPercent = Math.round(totalTax / salary * 10000) / 100; /*2 significant d*/
+      return {
+        totalTax: totalTax,
+        netSalary: netSalary,
+        totalPercent: totalPercent,
+        bracketList: bracketList
+      };
+    }
+  }, {
+    key: '_calculateDetailed',
+    value: function _calculateDetailed(taxBrackets, salary) {
+      // add some sensible caching of the results
+      return this._calculateGraphData(taxBrackets, salary).bracketList;
     }
   }, {
     key: '_calculateOverall',
     value: function _calculateOverall(taxBrackets, salary) {
-      var lastLimit = 0,
-          start = 0,
-          end = salary,
-          percent = undefined,
-          taxLength = 0;
-      taxBrackets.forEach(function (bracket, index) {
-        if (salary > lastLimit) {
-          var bracketStart = index === 0 ? 0 : taxBrackets[index - 1].limit;
-          var bracketEnd = salary < bracket.limit ? salary : bracket.limit;
-          if (bracketEnd < 0) {
-            bracketEnd = salary;
-          };
-          taxLength += Math.floor((bracketEnd - bracketStart) * bracket.taxValue / 100);
-          lastLimit = bracket.limit;
-        }
-      });
-      percent = Math.round(taxLength / salary * 10000) / 100;
-      return [{ start: start, end: end, percent: percent, taxLength: taxLength }];
+      // again, caching of results
+      var gd = this._calculateGraphData(taxBrackets, salary);
+      return [{
+        start: 0,
+        end: salary,
+        percent: gd.totalPercent,
+        taxLength: gd.totalTax
+      }];
     }
   }, {
     key: '_renderGraph',
@@ -157,7 +168,7 @@ var TaxBrackets = (function () {
     key: 'initGraph',
     value: function initGraph(salary) {
       // console.log('initGraph', )
-      this.salary = salary;
+      this.salary = +salary;
       this.lastViewFunction();
     }
   }, {

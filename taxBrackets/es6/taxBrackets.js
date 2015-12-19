@@ -37,42 +37,53 @@ class TaxBrackets {
     })
 
   }
-   _calculateDetailed (taxBrackets, salary) {
-    // this is just a proof of concept, very ugly code
-    let graphData = [],
+  _calculateGraphData (taxBrackets, salary) {
+    let bracketList = [],
         lastLimit = 0,
-        segmentLength;
-    taxBrackets.forEach( (bracket, index) => {
+        totalTax = 0,
+        netSalary = 0,
+        totalPercent = 0;
+    taxBrackets.forEach( (bracket, i) => {
       if (salary > lastLimit) {
-        let start, end, percent, taxLength;
-        start = index === 0 ? 0 : graphData[graphData.length -1].end;
+        let start, end, percent, bracketLength, taxLength, netLength;
+        start = i === 0 ? 0 : bracketList[bracketList.length - 1].end;
         end = salary < bracket.limit ? salary : bracket.limit;
         if (end < 0) {end = salary};
         percent = bracket.taxValue;
-        taxLength = Math.floor((end - start) * percent / 100);
-        graphData.push({start, end, percent, taxLength});
+        bracketLength = end - start;
+        taxLength = Math.round(bracketLength * percent) / 100; /* 2 sign digits*/
+        netLength = bracketLength - taxLength;
+        bracketList.push(
+          {start, end, percent, bracketLength, taxLength, netLength}
+        );
         lastLimit = bracket.limit;
       }
+    });
+    bracketList.forEach( (bracket, i) => {
+      totalTax += bracket.taxLength;
+      netSalary += bracket.netLength;
     })
-    return graphData;
+    totalPercent = Math.round(totalTax / salary * 10000) / 100; /*2 significant d*/
+    return {
+      totalTax,
+      netSalary,
+      totalPercent,
+      bracketList
+    }
+  }
+  _calculateDetailed (taxBrackets, salary) {
+    // add some sensible caching of the results
+    return this._calculateGraphData(taxBrackets, salary).bracketList;
   }
   _calculateOverall (taxBrackets, salary) {
-    let lastLimit = 0,
-        start = 0,
-        end = salary,
-        percent,
-        taxLength = 0;
-    taxBrackets.forEach( (bracket, index) => {
-      if (salary > lastLimit) {
-        let bracketStart = index === 0 ? 0 : taxBrackets[index - 1].limit;
-        let bracketEnd = salary < bracket.limit ? salary : bracket.limit;
-        if (bracketEnd < 0) {bracketEnd = salary};
-        taxLength += Math.floor((bracketEnd - bracketStart) * bracket.taxValue / 100);
-        lastLimit = bracket.limit;
-      }
-    })
-    percent = Math.round(taxLength / salary * 10000)/100;
-    return [{start, end, percent, taxLength}];
+    // again, caching of results
+    let gd = this._calculateGraphData(taxBrackets, salary);
+    return [{
+      start: 0,
+      end: salary,
+      percent: gd.totalPercent,
+      taxLength: gd.totalTax
+    }];
   }
   _renderGraph (thisFrame, graphData) {
     // create graphConfig object and unpack
@@ -163,7 +174,7 @@ class TaxBrackets {
   }
   initGraph (salary) {
     // console.log('initGraph', )
-    this.salary = salary;
+    this.salary = +salary;
     this.lastViewFunction();
   }
   showOverall () {
