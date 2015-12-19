@@ -12,15 +12,19 @@ class TaxBrackets {
     }
     this.config.innerWidth = this.config.outerWidth - this.config.boxMargin.left - this.config.boxMargin.right;
     this.config.innerHeight = this.config.outerHeight - this.config.boxMargin.top - this.config.boxMargin.bottom;
-    this.viewFuncDict = {'overall': this.showOverall, 'detailed': this.showDetailed}
-    this.lastViewFunction = this.viewFuncDict[this.config.defaultView];
+    this.viewFuncDict = {
+      'overall': this.showOverall,
+      'detailed': this.showDetailed
+    }
+    this.lastViewMode = this.config.defaultView;
 
     this.taxSystems = taxSystems;
     this.innerFrames = [];
 
     let svg = d3.select('#taxBrackets')
         .attr('width', this.config.outerWidth)
-        .attr('height', this.config.outerHeight * this.taxSystems.length);
+        .attr('height', this.config.outerHeight * this.taxSystems.length)
+        .on('mouseup', this.toggleMode.bind(this));
 
     this.taxSystems.forEach( (taxSystem, index) => {
       let leftMargin = this.config.boxMargin.left,
@@ -34,6 +38,7 @@ class TaxBrackets {
           .text(taxSystem.name)
           .style("text-anchor", "start")
       this.innerFrames.push(thisFrame);
+    })
 
     this.tooltip = d3.tip()
           .attr('class', 'd3-tooltip')
@@ -41,9 +46,6 @@ class TaxBrackets {
             return content
           });
     svg.call(this.tooltip);
-
-    })
-
   }
   _calculateGraphData (taxBrackets, salary) {
     let bracketList = [],
@@ -305,10 +307,12 @@ class TaxBrackets {
   }
   initGraph (salary) {
     this.salary = +salary;
-    this.lastViewFunction();
+    // that's one horrible hack with this
+    // for some reason the dict[key] has empty this
+    this.viewFuncDict[this.lastViewMode].bind(this)();
   }
   showOverall () {
-    this.lastViewFunction = this.viewFuncDict['overall'];
+    this.lastViewMode = 'overall';
     this.innerFrames.forEach( (_, index) => {
       let graphData = this._calculateOverall(
         this.taxSystems[index].brackets, this.salary
@@ -317,7 +321,7 @@ class TaxBrackets {
     })
   }
   showDetailed () {
-    this.lastViewFunction = this.viewFuncDict['detailed'];
+    this.lastViewMode = 'detailed';
     this.innerFrames.forEach( (_, index) => {
       let graphData = this._calculateDetailed(
         this.taxSystems[index].brackets, this.salary
@@ -325,7 +329,12 @@ class TaxBrackets {
       this._renderGraph(this.innerFrames[index], graphData)
     })
   }
+  toggleMode () {
+    if (this.lastViewMode === 'overall') {
+      this.lastViewMode = 'detailed';
+    } else {
+      this.lastViewMode = 'overall';
+    }
+    this.viewFuncDict[this.lastViewMode].bind(this)();
+  }
 }
-
-
-

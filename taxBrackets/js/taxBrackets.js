@@ -20,13 +20,16 @@ var TaxBrackets = (function () {
     };
     this.config.innerWidth = this.config.outerWidth - this.config.boxMargin.left - this.config.boxMargin.right;
     this.config.innerHeight = this.config.outerHeight - this.config.boxMargin.top - this.config.boxMargin.bottom;
-    this.viewFuncDict = { 'overall': this.showOverall, 'detailed': this.showDetailed };
-    this.lastViewFunction = this.viewFuncDict[this.config.defaultView];
+    this.viewFuncDict = {
+      'overall': this.showOverall,
+      'detailed': this.showDetailed
+    };
+    this.lastViewMode = this.config.defaultView;
 
     this.taxSystems = taxSystems;
     this.innerFrames = [];
 
-    var svg = d3.select('#taxBrackets').attr('width', this.config.outerWidth).attr('height', this.config.outerHeight * this.taxSystems.length);
+    var svg = d3.select('#taxBrackets').attr('width', this.config.outerWidth).attr('height', this.config.outerHeight * this.taxSystems.length).on('mouseup', this.toggleMode.bind(this));
 
     this.taxSystems.forEach(function (taxSystem, index) {
       var leftMargin = _this.config.boxMargin.left,
@@ -34,12 +37,12 @@ var TaxBrackets = (function () {
       var thisFrame = svg.append('g').attr('transform', 'translate(' + leftMargin + ',' + topMargin + ')');
       thisFrame.append('text').attr('class', 'system-name').attr('x', 0).attr('y', 0).text(taxSystem.name).style("text-anchor", "start");
       _this.innerFrames.push(thisFrame);
-
-      _this.tooltip = d3.tip().attr('class', 'd3-tooltip').html(function (content) {
-        return content;
-      });
-      svg.call(_this.tooltip);
     });
+
+    this.tooltip = d3.tip().attr('class', 'd3-tooltip').html(function (content) {
+      return content;
+    });
+    svg.call(this.tooltip);
   }
 
   _createClass(TaxBrackets, [{
@@ -256,14 +259,16 @@ var TaxBrackets = (function () {
     key: 'initGraph',
     value: function initGraph(salary) {
       this.salary = +salary;
-      this.lastViewFunction();
+      // that's one horrible hack with this
+      // for some reason the dict[key] has empty this
+      this.viewFuncDict[this.lastViewMode].bind(this)();
     }
   }, {
     key: 'showOverall',
     value: function showOverall() {
       var _this3 = this;
 
-      this.lastViewFunction = this.viewFuncDict['overall'];
+      this.lastViewMode = 'overall';
       this.innerFrames.forEach(function (_, index) {
         var graphData = _this3._calculateOverall(_this3.taxSystems[index].brackets, _this3.salary);
         _this3._renderGraph(_this3.innerFrames[index], graphData);
@@ -274,11 +279,21 @@ var TaxBrackets = (function () {
     value: function showDetailed() {
       var _this4 = this;
 
-      this.lastViewFunction = this.viewFuncDict['detailed'];
+      this.lastViewMode = 'detailed';
       this.innerFrames.forEach(function (_, index) {
         var graphData = _this4._calculateDetailed(_this4.taxSystems[index].brackets, _this4.salary);
         _this4._renderGraph(_this4.innerFrames[index], graphData);
       });
+    }
+  }, {
+    key: 'toggleMode',
+    value: function toggleMode() {
+      if (this.lastViewMode === 'overall') {
+        this.lastViewMode = 'detailed';
+      } else {
+        this.lastViewMode = 'overall';
+      }
+      this.viewFuncDict[this.lastViewMode].bind(this)();
     }
   }]);
 
