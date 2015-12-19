@@ -51,7 +51,7 @@ var taxNowoczesna = {
   }]
 };
 
-var tbInstance = new TaxBrackets([taxCurrent, taxRazem, taxNowoczesna]);
+var tbInstance = new TaxBrackets('#taxBrackets', [taxCurrent, taxRazem, taxNowoczesna]);
 tbInstance.initGraph($('#salary').val());
 
 $('#salary').on('keyup', function (event) {

@@ -5,7 +5,7 @@ var _createClass = (function () { function defineProperties(target, props) { for
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
 var TaxBrackets = (function () {
-  function TaxBrackets(taxSystems, config) {
+  function TaxBrackets(selector, taxSystems, config) {
     var _this = this;
 
     _classCallCheck(this, TaxBrackets);
@@ -29,7 +29,7 @@ var TaxBrackets = (function () {
     this.taxSystems = taxSystems;
     this.innerFrames = [];
 
-    var svg = d3.select('#taxBrackets').attr('width', this.config.outerWidth).attr('height', this.config.outerHeight * this.taxSystems.length).on('mouseup', this.toggleMode.bind(this));
+    var svg = d3.select(selector).attr('width', this.config.outerWidth).attr('height', this.config.outerHeight * this.taxSystems.length).on('mouseup', this.toggleMode.bind(this));
 
     this.taxSystems.forEach(function (taxSystem, index) {
       var leftMargin = _this.config.boxMargin.left,

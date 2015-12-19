@@ -10,7 +10,7 @@ To initialize install all the requirements:
 
 To create a taxBracket instance:
 
-`var tbInstance = new TaxBrackets(listOfTaxSystems)`
+`var tbInstance = new TaxBrackets(selector, listOfTaxSystems, configObject)`
 
 To update with a new salary: `tbInstance.initGraph(salary)`
 

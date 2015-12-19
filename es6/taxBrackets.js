@@ -1,6 +1,6 @@
 
 class TaxBrackets {
-  constructor (taxSystems, config) {
+  constructor (selector, taxSystems, config) {
     this.config = {
       outerWidth: config && config.outerWidth ? config.outerWidth : 1000,
       outerHeight: config && config.outerHeight ? config.outerHeight : 125,
@@ -21,7 +21,7 @@ class TaxBrackets {
     this.taxSystems = taxSystems;
     this.innerFrames = [];
 
-    let svg = d3.select('#taxBrackets')
+    let svg = d3.select(selector)
         .attr('width', this.config.outerWidth)
         .attr('height', this.config.outerHeight * this.taxSystems.length)
         .on('mouseup', this.toggleMode.bind(this));
