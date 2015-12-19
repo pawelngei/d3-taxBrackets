@@ -133,20 +133,49 @@ var TaxBrackets = (function () {
       .exit().transition().duration(c.animationTime / 2).attr('width', 0).remove();
       var salaryLegend = thisFrame.selectAll('.salary-legend').data(graphData);
       salaryLegend.enter().append('text').attr('class', 'salary-legend').attr('x', function (d) {
-        return xScale(d.start + d.taxLength + d.netLength / 2);
+        return xScale(d.start + d.bracketLength / 2);
       }).attr('y', 67).text(function (d) {
-        return Math.round(d.netLength * 100) / 100;
+        return Math.round(d.bracketLength * 100) / 100;
       }).style('text-anchor', 'middle').style('visibility', 'visible');
       salaryLegend.transition().duration(c.animationTime).text(function (d) {
+        return Math.round(d.bracketLength * 100) / 100;
+      }).attr('x', function (d) {
+        return xScale(d.start + d.bracketLength / 2);
+      });
+      salaryLegend.exit().transition().duration(c.animationTime / 2).remove();
+      var netRects = thisFrame.selectAll('.net').data(graphData);
+      netRects /* enter phase */
+      .enter().append('rect').attr('class', 'net').attr('x', function (d) {
+        return xScale(d.start + d.taxLength);
+      }).attr('y', 25).attr('width', 0).attr('height', 25).transition().duration(c.animationTime).attr('x', function (d) {
+        return xScale(d.start + d.taxLength);
+      }).attr('width', function (d) {
+        return xScale(d.end - (d.taxLength + d.start)) - c.barMargin;
+      });
+      netRects /* update phase */
+      .transition().duration(c.animationTime).attr('x', function (d) {
+        return xScale(d.start + d.taxLength);
+      }).attr('width', function (d) {
+        return xScale(d.end - (d.taxLength + d.start)) - c.barMargin;
+      });
+      netRects /* exit phase */
+      .exit().transition().duration(c.animationTime / 2).attr('width', 0).remove();
+      var netLegend = thisFrame.selectAll('.net-legend').data(graphData);
+      netLegend.enter().append('text').attr('class', 'net-legend').attr('x', function (d) {
+        return xScale(d.start + d.taxLength + d.netLength / 2);
+      }).attr('y', 43).text(function (d) {
+        return Math.round(d.netLength * 100) / 100;
+      }).style('text-anchor', 'middle').style('visibility', 'visible');
+      netLegend.transition().duration(c.animationTime).text(function (d) {
         return Math.round(d.netLength * 100) / 100;
       }).attr('x', function (d) {
         return xScale(d.start + d.taxLength + d.netLength / 2);
       });
-      salaryLegend.exit().transition().duration(c.animationTime / 2).remove();
+      netLegend.exit().transition().duration(c.animationTime / 2).remove();
       var taxRects = thisFrame.selectAll('.tax').data(graphData);
       taxRects.enter().append('rect').attr('class', 'tax').attr('x', function (d) {
         return xScale(d.start);
-      }).attr('y', 25).attr('width', 0).attr('height', 50).transition().duration(c.animationTime).attr('width', function (d) {
+      }).attr('y', 25).attr('width', 0).attr('height', 25).transition().duration(c.animationTime).attr('width', function (d) {
         return xScale(d.taxLength);
       });
       taxRects.transition().duration(c.animationTime).attr('x', function (d) {
@@ -155,6 +184,28 @@ var TaxBrackets = (function () {
         return xScale(d.taxLength);
       });
       taxRects.exit().transition().duration(c.animationTime / 2).attr('width', 0).remove();
+      var taxLegend = thisFrame.selectAll('.tax-legend').data(graphData);
+      taxLegend.enter().append('text').attr('class', 'tax-legend').attr('x', function (d) {
+        return xScale(d.start + d.taxLength / 2);
+      }).attr('y', 43).text(function (d) {
+        return Math.round(d.taxLength * 100) / 100;
+      }).style('text-anchor', 'middle').style('visibility', function (d) {
+        if (Math.round(d.taxLength) > 0) {
+          return 'visible';
+        }
+        return 'hidden';
+      });
+      taxLegend.transition().duration(c.animationTime).text(function (d) {
+        return Math.round(d.taxLength * 100) / 100;
+      }).attr('x', function (d) {
+        return xScale(d.start + d.taxLength / 2);
+      }).style('visibility', function (d) {
+        if (Math.round(d.taxLength) > 0) {
+          return 'visible';
+        }
+        return 'hidden';
+      });
+      taxLegend.exit().transition().duration(c.animationTime / 2).remove();
       var percentLegend = thisFrame.selectAll('.percent').data(graphData);
       percentLegend.enter().append('text').attr('class', 'percent').attr('x', function (d) {
         return xScale(d.start);

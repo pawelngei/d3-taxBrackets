@@ -112,11 +112,11 @@ class TaxBrackets {
           .attr('height', 25)
         .transition().duration(c.animationTime)
           .attr('x', d => xScale(d.start))
-          .attr('width', d => xScale(d.end - d.start) - c.barMargin);
+          .attr('width', d => xScale(d.end-d.start)-c.barMargin);
         salaryRects /* update phase */
           .transition().duration(c.animationTime)
           .attr('x', d => xScale(d.start))
-          .attr('width', d => xScale(d.end - d.start) - c.barMargin);
+          .attr('width', d => xScale(d.end-d.start)-c.barMargin);
         salaryRects /* exit phase */
           .exit()
           .transition().duration(c.animationTime/2)
@@ -127,16 +127,55 @@ class TaxBrackets {
         salaryLegend
           .enter().append('text')
           .attr('class', 'salary-legend')
-          .attr('x', d => xScale(d.start+d.taxLength+d.netLength/2))
+          .attr('x', d => xScale(d.start+d.bracketLength/2))
           .attr('y', 67)
-          .text(d => Math.round(d.netLength*100)/100)
+          .text(d => Math.round(d.bracketLength*100)/100)
           .style('text-anchor', 'middle')
           .style('visibility', 'visible')
         salaryLegend
           .transition().duration(c.animationTime)
+          .text(d => Math.round(d.bracketLength*100)/100)
+          .attr('x', d => xScale(d.start+d.bracketLength/2))
+        salaryLegend
+          .exit()
+          .transition().duration(c.animationTime/2)
+          .remove()
+    let netRects = thisFrame.selectAll('.net')
+          .data(graphData)
+        netRects /* enter phase */
+          .enter().append('rect')
+          .attr('class', 'net')
+          .attr('x', d => xScale(d.start+d.taxLength))
+          .attr('y', 25)
+          .attr('width', 0)
+          .attr('height', 25)
+        .transition().duration(c.animationTime)
+          .attr('x', d => xScale(d.start+d.taxLength))
+          .attr('width', d => xScale(d.end-(d.taxLength+d.start))-c.barMargin);
+        netRects /* update phase */
+          .transition().duration(c.animationTime)
+          .attr('x', d => xScale(d.start+d.taxLength))
+          .attr('width', d => xScale(d.end-(d.taxLength+d.start))-c.barMargin);
+        netRects /* exit phase */
+          .exit()
+          .transition().duration(c.animationTime/2)
+          .attr('width', 0)
+          .remove();
+    let netLegend = thisFrame.selectAll('.net-legend')
+          .data(graphData)
+        netLegend
+          .enter().append('text')
+          .attr('class', 'net-legend')
+          .attr('x', d => xScale(d.start+d.taxLength+d.netLength/2))
+          .attr('y', 43)
+          .text(d => Math.round(d.netLength*100)/100)
+          .style('text-anchor', 'middle')
+          .style('visibility', 'visible')
+        netLegend
+          .transition().duration(c.animationTime)
           .text(d => Math.round(d.netLength*100)/100)
           .attr('x', d => xScale(d.start+d.taxLength+d.netLength/2))
-        salaryLegend
+        netLegend
           .exit()
           .transition().duration(c.animationTime/2)
           .remove()
@@ -147,7 +186,7 @@ class TaxBrackets {
           .attr('x', d => xScale(d.start))
           .attr('y', 25)
           .attr('width', 0)
-          .attr('height', 50)
+          .attr('height', 25)
         .transition().duration(c.animationTime)
           .attr('width', d=> xScale(d.taxLength));
         taxRects
@@ -159,6 +198,35 @@ class TaxBrackets {
           .transition().duration(c.animationTime/2)
           .attr('width', 0)
           .remove();
+    let taxLegend = thisFrame.selectAll('.tax-legend')
+          .data(graphData)
+        taxLegend
+          .enter().append('text')
+          .attr('class', 'tax-legend')
+          .attr('x', d => xScale(d.start+d.taxLength/2))
+          .attr('y', 43)
+          .text(d => Math.round(d.taxLength*100)/100)
+          .style('text-anchor', 'middle')
+          .style('visibility', d => {
+            if (Math.round(d.taxLength) > 0) {
+              return 'visible'
+            }
+            return 'hidden'
+          })
+        taxLegend
+          .transition().duration(c.animationTime)
+          .text(d => Math.round(d.taxLength*100)/100)
+          .attr('x', d => xScale(d.start+d.taxLength/2))
+          .style('visibility', d => {
+            if (Math.round(d.taxLength) > 0) {
+              return 'visible'
+            }
+            return 'hidden'
+          })
+        taxLegend
+          .exit()
+          .transition().duration(c.animationTime/2)
+          .remove()
     let percentLegend = thisFrame.selectAll('.percent').data(graphData)
         percentLegend
           .enter().append('text')
