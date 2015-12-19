@@ -108,6 +108,16 @@ var TaxBrackets = (function () {
       // be ready to change to logscale with big values
       .domain([0, graphData[graphData.length - 1].end]);
 
+      var measureTextLength = function measureTextLength(lengthKey) {
+        return function (d) {
+          var textLength = this.getComputedTextLength();
+          if (d[lengthKey] === 0 || textLength > xScale(d[lengthKey])) {
+            return 'hidden';
+          }
+          return 'visible';
+        };
+      };
+
       var salaryRects = thisFrame.selectAll('.salary').data(graphData);
       salaryRects /* enter phase */
       .enter().append('rect').attr('class', 'salary').attr('x', function (d) {
@@ -130,24 +140,12 @@ var TaxBrackets = (function () {
         return xScale(d.start + d.bracketLength / 2);
       }).attr('y', 67).text(function (d) {
         return Math.round(d.bracketLength * 100) / 100;
-      }).style('text-anchor', 'middle').style('visibility', function (d) {
-        var textLength = this.getComputedTextLength();
-        if (d.bracketLength === 0 || textLength > xScale(d.bracketLength)) {
-          return 'hidden';
-        }
-        return 'visible';
-      });
+      }).style('text-anchor', 'middle').style('visibility', measureTextLength('bracketLength'));
       salaryLegend.transition().duration(c.animationTime).text(function (d) {
         return Math.round(d.bracketLength * 100) / 100;
       }).attr('x', function (d) {
         return xScale(d.start + d.bracketLength / 2);
-      }).style('visibility', function (d) {
-        var textLength = this.getComputedTextLength();
-        if (d.bracketLength === 0 || textLength > xScale(d.bracketLength)) {
-          return 'hidden';
-        }
-        return 'visible';
-      });
+      }).style('visibility', measureTextLength('bracketLength'));
       salaryLegend.exit().transition().duration(c.animationTime / 2).remove();
       var netRects = thisFrame.selectAll('.net').data(graphData);
       netRects /* enter phase */
@@ -171,24 +169,12 @@ var TaxBrackets = (function () {
         return xScale(d.start + d.taxLength + d.netLength / 2);
       }).attr('y', 43).text(function (d) {
         return Math.round(d.netLength * 100) / 100;
-      }).style('text-anchor', 'middle').style('visibility', function (d) {
-        var textLength = this.getComputedTextLength();
-        if (d.netLength === 0 || textLength > xScale(d.netLength)) {
-          return 'hidden';
-        }
-        return 'visible';
-      });
+      }).style('text-anchor', 'middle').style('visibility', measureTextLength('netLength'));
       netLegend.transition().duration(c.animationTime).text(function (d) {
         return Math.round(d.netLength * 100) / 100;
       }).attr('x', function (d) {
         return xScale(d.start + d.taxLength + d.netLength / 2);
-      }).style('visibility', function (d) {
-        var textLength = this.getComputedTextLength();
-        if (d.netLength === 0 || textLength > xScale(d.netLength)) {
-          return 'hidden';
-        }
-        return 'visible';
-      });
+      }).style('visibility', measureTextLength('netLength'));
       netLegend.exit().transition().duration(c.animationTime / 2).remove();
       var taxRects = thisFrame.selectAll('.tax').data(graphData);
       taxRects.enter().append('rect').attr('class', 'tax').attr('x', function (d) {
@@ -207,24 +193,12 @@ var TaxBrackets = (function () {
         return xScale(d.start + d.taxLength / 2);
       }).attr('y', 43).text(function (d) {
         return Math.round(d.taxLength * 100) / 100;
-      }).style('text-anchor', 'middle').style('visibility', function (d) {
-        var textLength = this.getComputedTextLength();
-        if (d.taxLength === 0 || textLength > xScale(d.taxLength)) {
-          return 'hidden';
-        }
-        return 'visible';
-      });
+      }).style('text-anchor', 'middle').style('visibility', measureTextLength('taxLength'));
       taxLegend.transition().duration(c.animationTime).text(function (d) {
         return Math.round(d.taxLength * 100) / 100;
       }).attr('x', function (d) {
         return xScale(d.start + d.taxLength / 2);
-      }).style('visibility', function (d) {
-        var textLength = this.getComputedTextLength();
-        if (d.taxLength === 0 || textLength > xScale(d.taxLength)) {
-          return 'hidden';
-        }
-        return 'visible';
-      });
+      }).style('visibility', measureTextLength('taxLength'));
       taxLegend.exit().transition().duration(c.animationTime / 2).remove();
       var percentLegend = thisFrame.selectAll('.percent').data(graphData);
       percentLegend.enter().append('text').attr('class', 'percent').attr('x', function (d) {

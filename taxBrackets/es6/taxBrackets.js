@@ -95,6 +95,16 @@ class TaxBrackets {
         // be ready to change to logscale with big values
         .domain([0, graphData[graphData.length -1].end]);
 
+    let measureTextLength = function (lengthKey) {
+      return function (d) {
+        let textLength = this.getComputedTextLength()
+        if (d[lengthKey] === 0 || textLength > xScale(d[lengthKey])) {
+          return 'hidden'
+        }
+        return 'visible'
+      }
+    }
+
     let salaryRects = thisFrame.selectAll('.salary')
           .data(graphData)
         salaryRects /* enter phase */
@@ -125,24 +135,12 @@ class TaxBrackets {
           .attr('y', 67)
           .text(d => Math.round(d.bracketLength*100)/100)
           .style('text-anchor', 'middle')
-          .style('visibility', function (d) {
-            let textLength = this.getComputedTextLength()
-            if (d.bracketLength === 0 || textLength > xScale(d.bracketLength)) {
-              return 'hidden'
-            }
-            return 'visible'
-          })
+          .style('visibility', measureTextLength('bracketLength'))
         salaryLegend
           .transition().duration(c.animationTime)
           .text(d => Math.round(d.bracketLength*100)/100)
           .attr('x', d => xScale(d.start+d.bracketLength/2))
-          .style('visibility', function (d) {
-            let textLength = this.getComputedTextLength()
-            if (d.bracketLength === 0 || textLength > xScale(d.bracketLength)) {
-              return 'hidden'
-            }
-            return 'visible'
-          })
+          .style('visibility', measureTextLength('bracketLength'))
         salaryLegend
           .exit()
           .transition().duration(c.animationTime/2)
@@ -177,24 +175,12 @@ class TaxBrackets {
           .attr('y', 43)
           .text(d => Math.round(d.netLength*100)/100)
           .style('text-anchor', 'middle')
-          .style('visibility', function (d) {
-            let textLength = this.getComputedTextLength()
-            if (d.netLength === 0 || textLength > xScale(d.netLength)) {
-              return 'hidden'
-            }
-            return 'visible'
-          })
+          .style('visibility', measureTextLength('netLength'))
         netLegend
           .transition().duration(c.animationTime)
           .text(d => Math.round(d.netLength*100)/100)
           .attr('x', d => xScale(d.start+d.taxLength+d.netLength/2))
-          .style('visibility', function (d) {
-            let textLength = this.getComputedTextLength()
-            if (d.netLength === 0 || textLength > xScale(d.netLength)) {
-              return 'hidden'
-            }
-            return 'visible'
-          })
+          .style('visibility', measureTextLength('netLength'))
         netLegend
           .exit()
           .transition().duration(c.animationTime/2)
@@ -227,24 +213,12 @@ class TaxBrackets {
           .attr('y', 43)
           .text(d => Math.round(d.taxLength*100)/100)
           .style('text-anchor', 'middle')
-          .style('visibility', function (d) {
-            let textLength = this.getComputedTextLength()
-            if (d.taxLength === 0 || textLength > xScale(d.taxLength)) {
-              return 'hidden'
-            }
-            return 'visible'
-          })
+          .style('visibility', measureTextLength('taxLength'))
         taxLegend
           .transition().duration(c.animationTime)
           .text(d => Math.round(d.taxLength*100)/100)
           .attr('x', d => xScale(d.start+d.taxLength/2))
-          .style('visibility', function (d) {
-            let textLength = this.getComputedTextLength()
-            if (d.taxLength === 0 || textLength > xScale(d.taxLength)) {
-              return 'hidden'
-            }
-            return 'visible'
-          })
+          .style('visibility', measureTextLength('taxLength'))
         taxLegend
           .exit()
           .transition().duration(c.animationTime/2)
