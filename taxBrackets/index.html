@@ -4,6 +4,7 @@
     <meta charset="utf-8">
     <title>TaxBrackets example</title>
     <script src="node_modules/d3/d3.min.js"></script>
+    <script src="node_modules/d3-tip/index.js"></script>
     <script src="node_modules/jquery/dist/jquery.min.js"></script>
     <style>
       .salary {
@@ -17,6 +18,14 @@
       }
       text {
         font-family: sans;
+      }
+      .d3-tooltip {
+        line-height: 1;
+        font-family: sans;
+        padding: 6px;
+        background: rgba(0, 0, 0, 0.8);
+        color: #fff;
+        border-radius: 2px;
       }
     </style>
   </head>

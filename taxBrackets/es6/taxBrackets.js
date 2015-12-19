@@ -6,7 +6,7 @@ class TaxBrackets {
       outerHeight: config && config.outerHeight ? config.outerHeight : 125,
       boxMargin: config && config.boxMargin ? config.boxMargin :
         { top: 25, right: 25, bottom: 0, left: 25},
-      barMargin: config && config.barMargin ? config.barMargin : 2,
+      barMargin: config && config.barMargin ? config.barMargin : 3,
       animationTime: config && config.animationTime ? config.animationTime : 1000,
       defaultView: 'overall'
     }
@@ -34,6 +34,14 @@ class TaxBrackets {
           .text(taxSystem.name)
           .style("text-anchor", "start")
       this.innerFrames.push(thisFrame);
+
+    this.tooltip = d3.tip()
+          .attr('class', 'd3-tooltip')
+          .html((content) => {
+            return content
+          });
+    svg.call(this.tooltip);
+
     })
 
   }
@@ -114,6 +122,8 @@ class TaxBrackets {
           .attr('y', 50)
           .attr('width', 0)
           .attr('height', 25)
+          .on('mouseover', (d) => this.tooltip.show(d.bracketLength))
+          .on('mouseout', this.tooltip.hide)
         .transition().duration(c.animationTime)
           .attr('x', d => xScale(d.start))
           .attr('width', d => xScale(d.end-d.start)-c.barMargin);
@@ -154,6 +164,8 @@ class TaxBrackets {
           .attr('y', 25)
           .attr('width', 0)
           .attr('height', 25)
+          .on('mouseover', (d) => this.tooltip.show(d.netLength))
+          .on('mouseout', this.tooltip.hide)
         .transition().duration(c.animationTime)
           .attr('x', d => xScale(d.start+d.taxLength))
           .attr('width', d => xScale(d.end-(d.taxLength+d.start))-c.barMargin);
@@ -193,6 +205,8 @@ class TaxBrackets {
           .attr('y', 25)
           .attr('width', 0)
           .attr('height', 25)
+          .on('mouseover', (d) => this.tooltip.show(d.taxLength))
+          .on('mouseout', this.tooltip.hide)
         .transition().duration(c.animationTime)
           .attr('width', d=> xScale(d.taxLength));
         taxRects
@@ -240,6 +254,29 @@ class TaxBrackets {
           .attr('x', d => xScale(d.start + (d.end - d.start)/2))
           .style('visibility', measureTextLength('bracketLength'))
         percentLegend
+          .exit()
+          .transition().duration(c.animationTime/2)
+          .attr('x', 0)
+          .remove();
+    let limitRects = thisFrame.selectAll('.limit-rect').data(graphData)
+        limitRects
+          .enter().append('rect')
+          .attr('class', 'limit-rect')
+          .attr('x', 0)
+          .attr('y', 23)
+          .attr('width', 0)
+          .attr('height', 54)
+          .style('fill', 'rgba(0,0,0,0)')
+          .on('mouseover', (d) => this.tooltip.show(d.end))
+          .on('mouseout', this.tooltip.hide)
+        .transition().duration(c.animationTime)
+          .attr('x', d => xScale(d.end) - c.barMargin)
+          .attr('width', c.barMargin)
+        limitRects
+        .transition().duration(c.animationTime)
+          .attr('x', d => xScale(d.end) - c.barMargin)
+          .attr('width', c.barMargin)
+        limitRects
           .exit()
           .transition().duration(c.animationTime/2)
           .attr('x', 0)
