@@ -93,7 +93,9 @@ var TaxBrackets = (function () {
         start: 0,
         end: salary,
         percent: gd.totalPercent,
-        taxLength: gd.totalTax
+        taxLength: gd.totalTax,
+        bracketLength: salary,
+        netLength: salary - gd.totalTax
       }];
     }
   }, {
@@ -105,6 +107,12 @@ var TaxBrackets = (function () {
       var xScale = d3.scale.linear().rangeRound([0, c.innerWidth])
       // be ready to change to logscale with big values
       .domain([0, graphData[graphData.length - 1].end]);
+
+      var debugFunction = function debugFunction(d) {
+        var x = xScale(d.start + d.taxLength + d.netLength / 2);
+        console.log(d, x);
+        return x;
+      };
 
       var salaryRects = thisFrame.selectAll('.salary').data(graphData);
       salaryRects /* enter phase */
@@ -123,6 +131,18 @@ var TaxBrackets = (function () {
       });
       salaryRects /* exit phase */
       .exit().transition().duration(c.animationTime / 2).attr('width', 0).remove();
+      var salaryLegend = thisFrame.selectAll('.salary-legend').data(graphData);
+      salaryLegend.enter().append('text').attr('class', 'salary-legend').attr('x', function (d) {
+        return xScale(d.start + d.taxLength + d.netLength / 2);
+      }).attr('y', 67).text(function (d) {
+        return Math.round(d.netLength * 100) / 100;
+      }).style('text-anchor', 'middle').style('visibility', 'visible');
+      salaryLegend.transition().duration(c.animationTime).text(function (d) {
+        return Math.round(d.netLength * 100) / 100;
+      }).attr('x', function (d) {
+        return xScale(d.start + d.taxLength + d.netLength / 2);
+      });
+      salaryLegend.exit().transition().duration(c.animationTime / 2).remove();
       var taxRects = thisFrame.selectAll('.tax').data(graphData);
       taxRects.enter().append('rect').attr('class', 'tax').attr('x', function (d) {
         return xScale(d.start);

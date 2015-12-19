@@ -82,7 +82,9 @@ class TaxBrackets {
       start: 0,
       end: salary,
       percent: gd.totalPercent,
-      taxLength: gd.totalTax
+      taxLength: gd.totalTax,
+      bracketLength: salary,
+      netLength: salary - gd.totalTax
     }];
   }
   _renderGraph (thisFrame, graphData) {
@@ -92,6 +94,12 @@ class TaxBrackets {
     let xScale = d3.scale.linear().rangeRound([0, c.innerWidth])
         // be ready to change to logscale with big values
         .domain([0, graphData[graphData.length -1].end]);
+
+    let debugFunction = function (d) {
+      let x = xScale(d.start+d.taxLength+d.netLength/2);
+      console.log(d, x);
+      return x;
+    }
 
     let salaryRects = thisFrame.selectAll('.salary')
           .data(graphData)
@@ -114,6 +122,24 @@ class TaxBrackets {
           .transition().duration(c.animationTime/2)
           .attr('width', 0)
           .remove();
+    let salaryLegend = thisFrame.selectAll('.salary-legend')
+          .data(graphData)
+        salaryLegend
+          .enter().append('text')
+          .attr('class', 'salary-legend')
+          .attr('x', d => xScale(d.start+d.taxLength+d.netLength/2))
+          .attr('y', 67)
+          .text(d => Math.round(d.netLength*100)/100)
+          .style('text-anchor', 'middle')
+          .style('visibility', 'visible')
+        salaryLegend
+          .transition().duration(c.animationTime)
+          .text(d => Math.round(d.netLength*100)/100)
+          .attr('x', d => xScale(d.start+d.taxLength+d.netLength/2))
+        salaryLegend
+          .exit()
+          .transition().duration(c.animationTime/2)
+          .remove()
     let taxRects = thisFrame.selectAll('.tax').data(graphData)
         taxRects
           .enter().append('rect')
