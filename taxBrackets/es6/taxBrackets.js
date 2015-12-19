@@ -231,12 +231,14 @@ class TaxBrackets {
           .attr('y', 20)
           .text(d => d.percent + '%')
           .style("text-anchor", "middle")
+          .style('visibility', measureTextLength('bracketLength'))
         .transition().duration(c.animationTime)
           .attr('x', d => xScale(d.start + (d.end - d.start)/2))
         percentLegend
           .transition().duration(c.animationTime)
           .text(d => d.percent + '%')
           .attr('x', d => xScale(d.start + (d.end - d.start)/2))
+          .style('visibility', measureTextLength('bracketLength'))
         percentLegend
           .exit()
           .transition().duration(c.animationTime/2)
@@ -250,12 +252,14 @@ class TaxBrackets {
           .attr('y', 90)
           .text(d => d.end + ' PLN')
           .style("text-anchor", "end")
+          .style('visibility', measureTextLength('bracketLength'))
         .transition().duration(c.animationTime)
           .attr('x', d => xScale(d.end))
         bracketLegend
           .transition().duration(c.animationTime)
           .text(d => d.end + ' PLN')
           .attr('x', d => xScale(d.end))
+          .style('visibility', measureTextLength('bracketLength'))
         bracketLegend
           .exit()
           .transition().duration(c.animationTime/2)

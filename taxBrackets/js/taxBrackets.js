@@ -205,28 +205,28 @@ var TaxBrackets = (function () {
         return xScale(d.start);
       }).attr('y', 20).text(function (d) {
         return d.percent + '%';
-      }).style("text-anchor", "middle").transition().duration(c.animationTime).attr('x', function (d) {
+      }).style("text-anchor", "middle").style('visibility', measureTextLength('bracketLength')).transition().duration(c.animationTime).attr('x', function (d) {
         return xScale(d.start + (d.end - d.start) / 2);
       });
       percentLegend.transition().duration(c.animationTime).text(function (d) {
         return d.percent + '%';
       }).attr('x', function (d) {
         return xScale(d.start + (d.end - d.start) / 2);
-      });
+      }).style('visibility', measureTextLength('bracketLength'));
       percentLegend.exit().transition().duration(c.animationTime / 2).attr('x', 0).remove();
       var bracketLegend = thisFrame.selectAll('.bracket-limit').data(graphData);
       bracketLegend.enter().append('text').attr('class', 'bracket-limit').attr('x', function (d) {
         return xScale(d.start);
       }).attr('y', 90).text(function (d) {
         return d.end + ' PLN';
-      }).style("text-anchor", "end").transition().duration(c.animationTime).attr('x', function (d) {
+      }).style("text-anchor", "end").style('visibility', measureTextLength('bracketLength')).transition().duration(c.animationTime).attr('x', function (d) {
         return xScale(d.end);
       });
       bracketLegend.transition().duration(c.animationTime).text(function (d) {
         return d.end + ' PLN';
       }).attr('x', function (d) {
         return xScale(d.end);
-      });
+      }).style('visibility', measureTextLength('bracketLength'));
       bracketLegend.exit().transition().duration(c.animationTime / 2).attr('x', 0).remove();
     }
   }, {
