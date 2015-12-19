@@ -59,7 +59,6 @@ let taxNowoczesna = {
     {
       limit: -1,
       taxValue: 16,
-      constant: 0
     }
   ]
 }

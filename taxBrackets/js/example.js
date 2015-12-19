@@ -47,8 +47,7 @@ var taxNowoczesna = {
     taxValue: 0
   }, {
     limit: -1,
-    taxValue: 16,
-    constant: 0
+    taxValue: 16
   }]
 };
 
