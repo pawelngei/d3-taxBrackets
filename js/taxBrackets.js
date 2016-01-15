@@ -118,35 +118,34 @@ var TaxBrackets = (function () {
       // be ready to change to logscale with big values
       .domain([0, graphData[graphData.length - 1].end]);
 
+      var displayTooltip = function displayTooltip(tooltipKey) {
+        return function (d, i) {
+          var selection = d3.select(this);
+          if (d.legendVisible[tooltipKey]) {
+            selection.on('mouseover', null).on('mouseout', null);
+          } else {
+            selection.on('mouseover', function (d) {
+              return globalTooltip.show(d[tooltipKey]);
+            }).on('mouseout', globalTooltip.hide);
+          }
+        };
+      };
+
       var measureTextLength = function measureTextLength(lengthKey) {
         return function (d) {
           var textLength = this.getComputedTextLength();
+          if (d.legendVisible === undefined) {
+            d.legendVisible = {};
+          }
           if (d[lengthKey] === 0 || textLength > xScale(d[lengthKey])) {
+            d.legendVisible[lengthKey] = false;
             return 'hidden';
           }
+          d.legendVisible[lengthKey] = true;
           return 'visible';
         };
       };
 
-      var salaryRects = thisFrame.selectAll('.salary').data(graphData);
-      salaryRects /* enter phase */
-      .enter().append('rect').attr('class', 'salary').attr('x', function (d) {
-        return xScale(d.start);
-      }).attr('y', 50).attr('width', 0).attr('height', 25).on('mouseover', function (d) {
-        return globalTooltip.show(d.bracketLength);
-      }).on('mouseout', globalTooltip.hide).transition().duration(c.animationTime).attr('x', function (d) {
-        return xScale(d.start);
-      }).attr('width', function (d) {
-        return xScale(d.end - d.start) - c.barMargin;
-      });
-      salaryRects /* update phase */
-      .transition().duration(c.animationTime).attr('x', function (d) {
-        return xScale(d.start);
-      }).attr('width', function (d) {
-        return xScale(d.end - d.start) - c.barMargin;
-      });
-      salaryRects /* exit phase */
-      .exit().transition().duration(c.animationTime / 2).attr('width', 0).remove();
       var salaryLegend = thisFrame.selectAll('.salary-legend').data(graphData);
       salaryLegend.enter().append('text').attr('class', 'salary-legend').attr('x', function (d) {
         return xScale(d.start + d.bracketLength / 2);
@@ -159,24 +158,22 @@ var TaxBrackets = (function () {
         return xScale(d.start + d.bracketLength / 2);
       }).style('visibility', measureTextLength('bracketLength'));
       salaryLegend.exit().transition().duration(c.animationTime / 2).remove();
-      var netRects = thisFrame.selectAll('.net').data(graphData);
-      netRects /* enter phase */
-      .enter().append('rect').attr('class', 'net').attr('x', function (d) {
-        return xScale(d.start + d.taxLength);
-      }).attr('y', 25).attr('width', 0).attr('height', 25).on('mouseover', function (d) {
-        return globalTooltip.show(d.netLength);
-      }).on('mouseout', globalTooltip.hide).transition().duration(c.animationTime).attr('x', function (d) {
-        return xScale(d.start + d.taxLength);
+      var salaryRects = thisFrame.selectAll('.salary').data(graphData);
+      salaryRects /* enter phase */
+      .enter().append('rect').attr('class', 'salary').attr('x', function (d) {
+        return xScale(d.start);
+      }).attr('y', 50).attr('width', 0).attr('height', 25).each(displayTooltip('bracketLength')).transition().duration(c.animationTime).attr('x', function (d) {
+        return xScale(d.start);
       }).attr('width', function (d) {
-        return xScale(d.end - (d.taxLength + d.start)) - c.barMargin;
-      });
-      netRects /* update phase */
+        return xScale(d.end - d.start) - c.barMargin;
+      }).each(displayTooltip('bracketLength'));
+      salaryRects /* update phase */
       .transition().duration(c.animationTime).attr('x', function (d) {
-        return xScale(d.start + d.taxLength);
+        return xScale(d.start);
       }).attr('width', function (d) {
-        return xScale(d.end - (d.taxLength + d.start)) - c.barMargin;
+        return xScale(d.end - d.start) - c.barMargin;
       });
-      netRects /* exit phase */
+      salaryRects /* exit phase */
       .exit().transition().duration(c.animationTime / 2).attr('width', 0).remove();
       var netLegend = thisFrame.selectAll('.net-legend').data(graphData);
       netLegend.enter().append('text').attr('class', 'net-legend').attr('x', function (d) {
@@ -190,20 +187,23 @@ var TaxBrackets = (function () {
         return xScale(d.start + d.taxLength + d.netLength / 2);
       }).style('visibility', measureTextLength('netLength'));
       netLegend.exit().transition().duration(c.animationTime / 2).remove();
-      var taxRects = thisFrame.selectAll('.tax').data(graphData);
-      taxRects.enter().append('rect').attr('class', 'tax').attr('x', function (d) {
-        return xScale(d.start);
-      }).attr('y', 25).attr('width', 0).attr('height', 25).on('mouseover', function (d) {
-        return globalTooltip.show(d.taxLength);
-      }).on('mouseout', globalTooltip.hide).transition().duration(c.animationTime).attr('width', function (d) {
-        return xScale(d.taxLength);
-      });
-      taxRects.transition().duration(c.animationTime).attr('x', function (d) {
-        return xScale(d.start);
+      var netRects = thisFrame.selectAll('.net').data(graphData);
+      netRects /* enter phase */
+      .enter().append('rect').attr('class', 'net').attr('x', function (d) {
+        return xScale(d.start + d.taxLength);
+      }).attr('y', 25).attr('width', 0).attr('height', 25).each(displayTooltip('netLength')).transition().duration(c.animationTime).attr('x', function (d) {
+        return xScale(d.start + d.taxLength);
       }).attr('width', function (d) {
-        return xScale(d.taxLength);
+        return xScale(d.end - (d.taxLength + d.start)) - c.barMargin;
       });
-      taxRects.exit().transition().duration(c.animationTime / 2).attr('width', 0).remove();
+      netRects /* update phase */
+      .transition().duration(c.animationTime).attr('x', function (d) {
+        return xScale(d.start + d.taxLength);
+      }).attr('width', function (d) {
+        return xScale(d.end - (d.taxLength + d.start)) - c.barMargin;
+      }).each(displayTooltip('netLength'));
+      netRects /* exit phase */
+      .exit().transition().duration(c.animationTime / 2).attr('width', 0).remove();
       var taxLegend = thisFrame.selectAll('.tax-legend').data(graphData);
       taxLegend.enter().append('text').attr('class', 'tax-legend').attr('x', function (d) {
         return xScale(d.start + d.taxLength / 2);
@@ -216,6 +216,18 @@ var TaxBrackets = (function () {
         return xScale(d.start + d.taxLength / 2);
       }).style('visibility', measureTextLength('taxLength'));
       taxLegend.exit().transition().duration(c.animationTime / 2).remove();
+      var taxRects = thisFrame.selectAll('.tax').data(graphData);
+      taxRects.enter().append('rect').attr('class', 'tax').attr('x', function (d) {
+        return xScale(d.start);
+      }).attr('y', 25).attr('width', 0).attr('height', 25).each(displayTooltip('taxLength')).transition().duration(c.animationTime).attr('width', function (d) {
+        return xScale(d.taxLength);
+      });
+      taxRects.transition().duration(c.animationTime).attr('x', function (d) {
+        return xScale(d.start);
+      }).attr('width', function (d) {
+        return xScale(d.taxLength);
+      });
+      taxRects.exit().transition().duration(c.animationTime / 2).attr('width', 0).remove();
       var percentLegend = thisFrame.selectAll('.percent').data(graphData);
       percentLegend.enter().append('text').attr('class', 'percent').attr('x', function (d) {
         return xScale(d.start);

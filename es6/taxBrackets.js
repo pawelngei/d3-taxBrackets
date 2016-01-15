@@ -106,39 +106,36 @@ class TaxBrackets {
         // be ready to change to logscale with big values
         .domain([0, graphData[graphData.length -1].end]);
 
+    let displayTooltip = function (tooltipKey) {
+      return function (d, i) {
+        let selection = d3.select(this);
+        if (d.legendVisible[tooltipKey]) {
+          selection
+            .on('mouseover', null)
+            .on('mouseout', null);
+        } else {
+          selection
+            .on('mouseover', (d) => globalTooltip.show(d[tooltipKey]))
+            .on('mouseout', globalTooltip.hide)
+        }
+      }
+    }
+
     let measureTextLength = function (lengthKey) {
       return function (d) {
-        let textLength = this.getComputedTextLength()
+        let textLength = this.getComputedTextLength();
+        if (d.legendVisible === undefined) {
+          d.legendVisible = {};
+        }
         if (d[lengthKey] === 0 || textLength > xScale(d[lengthKey])) {
+          d.legendVisible[lengthKey] = false;
           return 'hidden'
         }
+        d.legendVisible[lengthKey] = true;
         return 'visible'
       }
     }
 
-    let salaryRects = thisFrame.selectAll('.salary')
-          .data(graphData)
-        salaryRects /* enter phase */
-          .enter().append('rect')
-          .attr('class', 'salary')
-          .attr('x', d => xScale(d.start))
-          .attr('y', 50)
-          .attr('width', 0)
-          .attr('height', 25)
-          .on('mouseover', (d) => globalTooltip.show(d.bracketLength))
-          .on('mouseout', globalTooltip.hide)
-        .transition().duration(c.animationTime)
-          .attr('x', d => xScale(d.start))
-          .attr('width', d => xScale(d.end-d.start)-c.barMargin);
-        salaryRects /* update phase */
-          .transition().duration(c.animationTime)
-          .attr('x', d => xScale(d.start))
-          .attr('width', d => xScale(d.end-d.start)-c.barMargin);
-        salaryRects /* exit phase */
-          .exit()
-          .transition().duration(c.animationTime/2)
-          .attr('width', 0)
-          .remove();
     let salaryLegend = thisFrame.selectAll('.salary-legend')
           .data(graphData)
         salaryLegend
@@ -158,25 +155,25 @@ class TaxBrackets {
           .exit()
           .transition().duration(c.animationTime/2)
           .remove()
-    let netRects = thisFrame.selectAll('.net')
+    let salaryRects = thisFrame.selectAll('.salary')
           .data(graphData)
-        netRects /* enter phase */
+        salaryRects /* enter phase */
           .enter().append('rect')
-          .attr('class', 'net')
-          .attr('x', d => xScale(d.start+d.taxLength))
-          .attr('y', 25)
+          .attr('class', 'salary')
+          .attr('x', d => xScale(d.start))
+          .attr('y', 50)
           .attr('width', 0)
           .attr('height', 25)
-          .on('mouseover', (d) => globalTooltip.show(d.netLength))
-          .on('mouseout', globalTooltip.hide)
+          .each(displayTooltip('bracketLength'))
         .transition().duration(c.animationTime)
-          .attr('x', d => xScale(d.start+d.taxLength))
-          .attr('width', d => xScale(d.end-(d.taxLength+d.start))-c.barMargin);
-        netRects /* update phase */
+          .attr('x', d => xScale(d.start))
+          .attr('width', d => xScale(d.end-d.start)-c.barMargin)
+          .each(displayTooltip('bracketLength'));
+        salaryRects /* update phase */
           .transition().duration(c.animationTime)
-          .attr('x', d => xScale(d.start+d.taxLength))
-          .attr('width', d => xScale(d.end-(d.taxLength+d.start))-c.barMargin);
-        netRects /* exit phase */
+          .attr('x', d => xScale(d.start))
+          .attr('width', d => xScale(d.end-d.start)-c.barMargin);
+        salaryRects /* exit phase */
           .exit()
           .transition().duration(c.animationTime/2)
           .attr('width', 0)
@@ -200,23 +197,25 @@ class TaxBrackets {
           .exit()
           .transition().duration(c.animationTime/2)
           .remove()
-    let taxRects = thisFrame.selectAll('.tax').data(graphData)
-        taxRects
+    let netRects = thisFrame.selectAll('.net')
+          .data(graphData)
+        netRects /* enter phase */
           .enter().append('rect')
-          .attr('class', 'tax')
-          .attr('x', d => xScale(d.start))
+          .attr('class', 'net')
+          .attr('x', d => xScale(d.start+d.taxLength))
           .attr('y', 25)
           .attr('width', 0)
           .attr('height', 25)
-          .on('mouseover', (d) => globalTooltip.show(d.taxLength))
-          .on('mouseout', globalTooltip.hide)
+          .each(displayTooltip('netLength'))
         .transition().duration(c.animationTime)
-          .attr('width', d=> xScale(d.taxLength));
-        taxRects
+          .attr('x', d => xScale(d.start+d.taxLength))
+          .attr('width', d => xScale(d.end-(d.taxLength+d.start))-c.barMargin);
+        netRects /* update phase */
           .transition().duration(c.animationTime)
-          .attr('x', d => xScale(d.start))
-          .attr('width', d=> xScale(d.taxLength));
-        taxRects
+          .attr('x', d => xScale(d.start+d.taxLength))
+          .attr('width', d => xScale(d.end-(d.taxLength+d.start))-c.barMargin)
+          .each(displayTooltip('netLength'));
+        netRects /* exit phase */
           .exit()
           .transition().duration(c.animationTime/2)
           .attr('width', 0)
@@ -240,6 +239,26 @@ class TaxBrackets {
           .exit()
           .transition().duration(c.animationTime/2)
           .remove()
+    let taxRects = thisFrame.selectAll('.tax').data(graphData)
+        taxRects
+          .enter().append('rect')
+          .attr('class', 'tax')
+          .attr('x', d => xScale(d.start))
+          .attr('y', 25)
+          .attr('width', 0)
+          .attr('height', 25)
+          .each(displayTooltip('taxLength'))
+        .transition().duration(c.animationTime)
+          .attr('width', d=> xScale(d.taxLength));
+        taxRects
+          .transition().duration(c.animationTime)
+          .attr('x', d => xScale(d.start))
+          .attr('width', d=> xScale(d.taxLength));
+        taxRects
+          .exit()
+          .transition().duration(c.animationTime/2)
+          .attr('width', 0)
+          .remove();
     let percentLegend = thisFrame.selectAll('.percent').data(graphData)
         percentLegend
           .enter().append('text')
