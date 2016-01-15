@@ -4,6 +4,8 @@ var _createClass = (function () { function defineProperties(target, props) { for
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
+var globalTooltip = undefined;
+
 var TaxBrackets = (function () {
   function TaxBrackets(selector, taxSystems, config) {
     var _this = this;
@@ -39,10 +41,10 @@ var TaxBrackets = (function () {
       _this.innerFrames.push(thisFrame);
     });
 
-    this.tooltip = d3.tip().attr('class', 'd3-tooltip').html(function (content) {
+    globalTooltip = d3.tip().attr('class', 'd3-tooltip').html(function (content) {
       return content;
     });
-    svg.call(this.tooltip);
+    svg.call(globalTooltip);
   }
 
   _createClass(TaxBrackets, [{
@@ -109,8 +111,6 @@ var TaxBrackets = (function () {
   }, {
     key: '_renderGraph',
     value: function _renderGraph(thisFrame, graphData) {
-      var _this2 = this;
-
       // create graphConfig object and unpack
       var c = this.config;
 
@@ -133,8 +133,8 @@ var TaxBrackets = (function () {
       .enter().append('rect').attr('class', 'salary').attr('x', function (d) {
         return xScale(d.start);
       }).attr('y', 50).attr('width', 0).attr('height', 25).on('mouseover', function (d) {
-        return _this2.tooltip.show(d.bracketLength);
-      }).on('mouseout', this.tooltip.hide).transition().duration(c.animationTime).attr('x', function (d) {
+        return globalTooltip.show(d.bracketLength);
+      }).on('mouseout', globalTooltip.hide).transition().duration(c.animationTime).attr('x', function (d) {
         return xScale(d.start);
       }).attr('width', function (d) {
         return xScale(d.end - d.start) - c.barMargin;
@@ -164,8 +164,8 @@ var TaxBrackets = (function () {
       .enter().append('rect').attr('class', 'net').attr('x', function (d) {
         return xScale(d.start + d.taxLength);
       }).attr('y', 25).attr('width', 0).attr('height', 25).on('mouseover', function (d) {
-        return _this2.tooltip.show(d.netLength);
-      }).on('mouseout', this.tooltip.hide).transition().duration(c.animationTime).attr('x', function (d) {
+        return globalTooltip.show(d.netLength);
+      }).on('mouseout', globalTooltip.hide).transition().duration(c.animationTime).attr('x', function (d) {
         return xScale(d.start + d.taxLength);
       }).attr('width', function (d) {
         return xScale(d.end - (d.taxLength + d.start)) - c.barMargin;
@@ -194,8 +194,8 @@ var TaxBrackets = (function () {
       taxRects.enter().append('rect').attr('class', 'tax').attr('x', function (d) {
         return xScale(d.start);
       }).attr('y', 25).attr('width', 0).attr('height', 25).on('mouseover', function (d) {
-        return _this2.tooltip.show(d.taxLength);
-      }).on('mouseout', this.tooltip.hide).transition().duration(c.animationTime).attr('width', function (d) {
+        return globalTooltip.show(d.taxLength);
+      }).on('mouseout', globalTooltip.hide).transition().duration(c.animationTime).attr('width', function (d) {
         return xScale(d.taxLength);
       });
       taxRects.transition().duration(c.animationTime).attr('x', function (d) {
@@ -232,8 +232,8 @@ var TaxBrackets = (function () {
       percentLegend.exit().transition().duration(c.animationTime / 2).attr('x', 0).remove();
       var limitRects = thisFrame.selectAll('.limit-rect').data(graphData);
       limitRects.enter().append('rect').attr('class', 'limit-rect').attr('x', 0).attr('y', 23).attr('width', 0).attr('height', 54).style('fill', 'rgba(0,0,0,0)').on('mouseover', function (d) {
-        return _this2.tooltip.show(d.end);
-      }).on('mouseout', this.tooltip.hide).transition().duration(c.animationTime).attr('x', function (d) {
+        return globalTooltip.show(d.end);
+      }).on('mouseout', globalTooltip.hide).transition().duration(c.animationTime).attr('x', function (d) {
         return xScale(d.end) - c.barMargin;
       }).attr('width', c.barMargin);
       limitRects.transition().duration(c.animationTime).attr('x', function (d) {
@@ -266,23 +266,23 @@ var TaxBrackets = (function () {
   }, {
     key: 'showOverall',
     value: function showOverall() {
-      var _this3 = this;
+      var _this2 = this;
 
       this.lastViewMode = 'overall';
       this.innerFrames.forEach(function (_, index) {
-        var graphData = _this3._calculateOverall(_this3.taxSystems[index].brackets, _this3.salary);
-        _this3._renderGraph(_this3.innerFrames[index], graphData);
+        var graphData = _this2._calculateOverall(_this2.taxSystems[index].brackets, _this2.salary);
+        _this2._renderGraph(_this2.innerFrames[index], graphData);
       });
     }
   }, {
     key: 'showDetailed',
     value: function showDetailed() {
-      var _this4 = this;
+      var _this3 = this;
 
       this.lastViewMode = 'detailed';
       this.innerFrames.forEach(function (_, index) {
-        var graphData = _this4._calculateDetailed(_this4.taxSystems[index].brackets, _this4.salary);
-        _this4._renderGraph(_this4.innerFrames[index], graphData);
+        var graphData = _this3._calculateDetailed(_this3.taxSystems[index].brackets, _this3.salary);
+        _this3._renderGraph(_this3.innerFrames[index], graphData);
       });
     }
   }, {

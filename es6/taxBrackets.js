@@ -1,3 +1,4 @@
+let globalTooltip;
 
 class TaxBrackets {
   constructor (selector, taxSystems, config) {
@@ -40,12 +41,12 @@ class TaxBrackets {
       this.innerFrames.push(thisFrame);
     })
 
-    this.tooltip = d3.tip()
+    globalTooltip = d3.tip()
           .attr('class', 'd3-tooltip')
           .html((content) => {
             return content
           });
-    svg.call(this.tooltip);
+    svg.call(globalTooltip);
   }
   _calculateGraphData (taxBrackets, salary) {
     let bracketList = [],
@@ -124,8 +125,8 @@ class TaxBrackets {
           .attr('y', 50)
           .attr('width', 0)
           .attr('height', 25)
-          .on('mouseover', (d) => this.tooltip.show(d.bracketLength))
-          .on('mouseout', this.tooltip.hide)
+          .on('mouseover', (d) => globalTooltip.show(d.bracketLength))
+          .on('mouseout', globalTooltip.hide)
         .transition().duration(c.animationTime)
           .attr('x', d => xScale(d.start))
           .attr('width', d => xScale(d.end-d.start)-c.barMargin);
@@ -166,8 +167,8 @@ class TaxBrackets {
           .attr('y', 25)
           .attr('width', 0)
           .attr('height', 25)
-          .on('mouseover', (d) => this.tooltip.show(d.netLength))
-          .on('mouseout', this.tooltip.hide)
+          .on('mouseover', (d) => globalTooltip.show(d.netLength))
+          .on('mouseout', globalTooltip.hide)
         .transition().duration(c.animationTime)
           .attr('x', d => xScale(d.start+d.taxLength))
           .attr('width', d => xScale(d.end-(d.taxLength+d.start))-c.barMargin);
@@ -207,8 +208,8 @@ class TaxBrackets {
           .attr('y', 25)
           .attr('width', 0)
           .attr('height', 25)
-          .on('mouseover', (d) => this.tooltip.show(d.taxLength))
-          .on('mouseout', this.tooltip.hide)
+          .on('mouseover', (d) => globalTooltip.show(d.taxLength))
+          .on('mouseout', globalTooltip.hide)
         .transition().duration(c.animationTime)
           .attr('width', d=> xScale(d.taxLength));
         taxRects
@@ -269,8 +270,8 @@ class TaxBrackets {
           .attr('width', 0)
           .attr('height', 54)
           .style('fill', 'rgba(0,0,0,0)')
-          .on('mouseover', (d) => this.tooltip.show(d.end))
-          .on('mouseout', this.tooltip.hide)
+          .on('mouseover', (d) => globalTooltip.show(d.end))
+          .on('mouseout', globalTooltip.hide)
         .transition().duration(c.animationTime)
           .attr('x', d => xScale(d.end) - c.barMargin)
           .attr('width', c.barMargin)
