@@ -1,0 +1,1210 @@
+{
+	"auto_complete":
+	{
+		"selected_items":
+		[
+			[
+				"verti",
+				"vertical-align"
+			],
+			[
+				"FEED",
+				"FEED_ALL_ATOM"
+			],
+			[
+				"add",
+				"addrAcc"
+			],
+			[
+				"one",
+				"oneDate"
+			],
+			[
+				"so",
+				"sortedTrans"
+			],
+			[
+				"trans",
+				"trans"
+			],
+			[
+				"BTCU",
+				"BTCUnits"
+			],
+			[
+				"BTCUni",
+				"BTCUnits"
+			],
+			[
+				"expenseBlo",
+				"expenseBlockLabels"
+			],
+			[
+				"Hit",
+				"HistoryFilter"
+			],
+			[
+				"expenseB",
+				"expenseBlock"
+			],
+			[
+				"name",
+				"name"
+			],
+			[
+				"active",
+				"active1"
+			],
+			[
+				"expenseBlockCh",
+				"expenseBlockChartConfig"
+			],
+			[
+				"incomeBlo",
+				"incomeBlockChartConfig"
+			],
+			[
+				"incomePie",
+				"incomePieChartConfig"
+			],
+			[
+				"incomePieC",
+				"incomePieChart"
+			],
+			[
+				"cate",
+				"categoryVenues"
+			],
+			[
+				"value",
+				"value"
+			],
+			[
+				"val",
+				"val"
+			],
+			[
+				"Not",
+				"Notifications"
+			],
+			[
+				"generalCha",
+				"generalChartConfig"
+			],
+			[
+				"pieChar",
+				"pieChartConfigTemplate"
+			],
+			[
+				"incomePieCh",
+				"incomePieChartConfig"
+			],
+			[
+				"incomePi",
+				"incomePieChartConfig"
+			],
+			[
+				"Stati",
+				"StatisticsController"
+			],
+			[
+				"stat",
+				"statistics"
+			],
+			[
+				"ali",
+				"align"
+			],
+			[
+				"passPh",
+				"passPhrase"
+			],
+			[
+				"activ",
+				"activate"
+			],
+			[
+				"success",
+				"successFunc"
+			],
+			[
+				"desc",
+				"description"
+			],
+			[
+				"deletionCan",
+				"deletionCandidateRaw"
+			],
+			[
+				"tr",
+				"tr	Tag"
+			],
+			[
+				"enc_pas",
+				"enc_passPhrase"
+			],
+			[
+				"succes",
+				"successFunc"
+			],
+			[
+				"fetchEn",
+				"fetchEncryptionError"
+			],
+			[
+				"authenti",
+				"authenticationPassword"
+			],
+			[
+				"Wallet",
+				"WalletService"
+			],
+			[
+				"pieCha",
+				"pieChartConfig"
+			],
+			[
+				"addr",
+				"addresses"
+			],
+			[
+				"pieCh",
+				"pieChartPromise"
+			],
+			[
+				"Passwo",
+				"PasswordReminder"
+			],
+			[
+				"passo",
+				"passwordForm"
+			],
+			[
+				"templ",
+				"templateUrl"
+			],
+			[
+				"newsP",
+				"newPassword2"
+			],
+			[
+				"sub",
+				"subscription"
+			],
+			[
+				"Catr",
+				"CategoryService"
+			],
+			[
+				"deleteAll",
+				"deleteAllCategories"
+			],
+			[
+				"balancePi",
+				"balancePieChartData"
+			],
+			[
+				"undef",
+				"undefined"
+			],
+			[
+				"Walle",
+				"WalletService"
+			],
+			[
+				"reassignTa",
+				"reassignTargetChosen"
+			],
+			[
+				"visib",
+				"visibilityObj"
+			],
+			[
+				"enc_passP",
+				"enc_passPhrase"
+			],
+			[
+				"enc_pass",
+				"enc_passPhrase"
+			],
+			[
+				"newPas",
+				"newPassword"
+			],
+			[
+				"auto",
+				"autofocus"
+			],
+			[
+				"justLogge",
+				"justLoggedIn"
+			],
+			[
+				"bu",
+				"button"
+			],
+			[
+				"edite",
+				"editedWalet2"
+			],
+			[
+				"Categor",
+				"CategoryService"
+			],
+			[
+				"Catego",
+				"CategoryService"
+			],
+			[
+				"Categ",
+				"CategoryService"
+			],
+			[
+				"expense",
+				"expenseCategory"
+			],
+			[
+				"expenseCat",
+				"expenseCategoryInput"
+			],
+			[
+				"expen",
+				"expenseDropdown"
+			],
+			[
+				"click",
+				"click"
+			],
+			[
+				"always",
+				"alwaysClearRSA"
+			],
+			[
+				"alway",
+				"alwaysClearRSA"
+			],
+			[
+				"logoutSucc",
+				"logoutSuccessModal"
+			],
+			[
+				"Regi",
+				"RegistrationService"
+			],
+			[
+				"Regist",
+				"RegistrationEncryptionController"
+			],
+			[
+				"ba",
+				"balance"
+			],
+			[
+				"encry",
+				"encryption_type==3"
+			],
+			[
+				"inva",
+				"invalidPassword"
+			],
+			[
+				"encrypt",
+				"encryption"
+			],
+			[
+				"userna",
+				"username_required"
+			],
+			[
+				"usern",
+				"username_required"
+			],
+			[
+				"regis",
+				"registrationSrv"
+			],
+			[
+				"encryptio",
+				"encryption_type==3"
+			],
+			[
+				"resp",
+				"responded_time"
+			],
+			[
+				"submi",
+				"submitted_time2"
+			],
+			[
+				"user_daily",
+				"user_daily"
+			],
+			[
+				"snaps",
+				"snapshotFactory"
+			],
+			[
+				"Snapsho",
+				"SnapshotSerializer"
+			],
+			[
+				"snapsh",
+				"snapshot_time"
+			],
+			[
+				"hits",
+				"hits"
+			],
+			[
+				"obje",
+				"user_object"
+			],
+			[
+				"mont",
+				"monthly_obj"
+			],
+			[
+				"appro",
+				"approved"
+			],
+			[
+				"avera",
+				"average_work_time"
+			],
+			[
+				"workt",
+				"worked_time"
+			],
+			[
+				"_calc",
+				"_calculate_hour_rate"
+			],
+			[
+				"average_",
+				"average_hour_rate"
+			],
+			[
+				"approve",
+				"approved_name"
+			],
+			[
+				"ret",
+				"returned"
+			],
+			[
+				"acce",
+				"accepted"
+			],
+			[
+				"HITF",
+				"HITFactory"
+			],
+			[
+				"percent_",
+				"percent_submitted"
+			],
+			[
+				"repai",
+				"repair_me"
+			],
+			[
+				"_incremen",
+				"_increment_earnings"
+			],
+			[
+				"updat",
+				"update_fields"
+			],
+			[
+				"phas",
+				"phase1_group"
+			],
+			[
+				"_reca",
+				"_recalculate_earnings"
+			],
+			[
+				"status",
+				"status"
+			],
+			[
+				"Stat",
+				"STATUS_LIST"
+			],
+			[
+				"logIn",
+				"logInButton"
+			],
+			[
+				"HITFA",
+				"HITFactoryApproved"
+			],
+			[
+				"average_rejectio",
+				"average_rejection_time"
+			],
+			[
+				"HITFac",
+				"HITFactoryRejected"
+			],
+			[
+				"average",
+				"average_rejection_time"
+			],
+			[
+				"average_rejection",
+				"average_rejection_rate"
+			],
+			[
+				"average_rejecti",
+				"average_rejection_rate"
+			],
+			[
+				"aver",
+				"average_approval_time"
+			],
+			[
+				"uuid",
+				"uuid"
+			],
+			[
+				"LogIn",
+				"LogInButton"
+			],
+			[
+				"user",
+				"userAuthenticated"
+			],
+			[
+				"error",
+				"errorView"
+			],
+			[
+				"extensi",
+				"extenstionInstalled"
+			],
+			[
+				"minRate",
+				"minRateFilter"
+			],
+			[
+				"minRat",
+				"minRateFilter"
+			],
+			[
+				"minRa",
+				"minRateFilter"
+			],
+			[
+				"hitgro",
+				"hitgroup"
+			],
+			[
+				"tota",
+				"total_amount"
+			],
+			[
+				"_reco",
+				"_recount_percent_statuses"
+			],
+			[
+				"STATUS",
+				"STATUS_LIST"
+			],
+			[
+				"_cal",
+				"_calculate_response_time"
+			]
+		]
+	},
+	"buffers":
+	[
+		{
+			"file": ".gitignore",
+			"settings":
+			{
+				"buffer_size": 32,
+				"line_ending": "Unix"
+			}
+		},
+		{
+			"file": "es6/taxBrackets.js",
+			"settings":
+			{
+				"buffer_size": 13234,
+				"line_ending": "Unix"
+			}
+		},
+		{
+			"file": "index.html",
+			"settings":
+			{
+				"buffer_size": 1192,
+				"line_ending": "Unix"
+			}
+		}
+	],
+	"build_system": "",
+	"build_system_choices":
+	[
+	],
+	"build_varint": "",
+	"command_palette":
+	{
+		"height": 125.0,
+		"last_filter": "",
+		"selected_items":
+		[
+			[
+				"install",
+				"Package Control: Install Package"
+			],
+			[
+				"sublimerge",
+				"Sublimerge: Compare to View..."
+			],
+			[
+				"package",
+				"Package Control: List Packages"
+			],
+			[
+				"Instal",
+				"Package Control: Install Package"
+			],
+			[
+				"enable",
+				"Package Control: Enable Package"
+			],
+			[
+				"disable",
+				"Package Control: Disable Package"
+			],
+			[
+				"package ",
+				"Package Control: List Packages"
+			],
+			[
+				"inst",
+				"Package Control: Install Package"
+			],
+			[
+				"INSTALL",
+				"Package Control: Install Package"
+			]
+		],
+		"width": 561.0
+	},
+	"console":
+	{
+		"height": 139.0,
+		"history":
+		[
+			"import urllib.request,os,hashlib; h = '7183a2d3e96f11eeadd761d777e62404e330c659d4bb41d3bdf022e94cab3cd0'; pf = 'Package Control.sublime-package'; ipp = sublime.installed_packages_path(); urllib.request.install_opener( urllib.request.build_opener( urllib.request.ProxyHandler()) ); by = urllib.request.urlopen( 'http://sublime.wbond.net/' + pf.replace(' ', '%20')).read(); dh = hashlib.sha256(by).hexdigest(); print('Error validating download (got %s instead of %s), please try manual install' % (dh, h)) if dh != h else open(os.path.join( ipp, pf), 'wb' ).write(by) ",
+			" import urllib.request,os,hashlib; h = '7183a2d3e96f11eeadd761d777e62404e330c659d4bb41d3bdf022e94cab3cd0'; pf = 'Package Control.sublime-package'; ipp = sublime.installed_packages_path(); urllib.request.install_opener( urllib.request.build_opener( urllib.request.ProxyHandler()) ); by = urllib.request.urlopen( 'http://sublime.wbond.net/' + pf.replace(' ', '%20')).read(); dh = hashlib.sha256(by).hexdigest(); print('Error validating download (got %s instead of %s), please try manual install' % (dh, h)) if dh != h else open(os.path.join( ipp, pf), 'wb' ).write(by) "
+		]
+	},
+	"distraction_free":
+	{
+		"menu_visible": true,
+		"show_minimap": false,
+		"show_open_files": false,
+		"show_tabs": false,
+		"side_bar_visible": false,
+		"status_bar_visible": false
+	},
+	"expanded_folders":
+	[
+		"/home/alxd/Sketchbook/d3-taxBrackets",
+		"/home/alxd/Sketchbook/d3-taxBrackets/es6",
+		"/home/alxd/Sketchbook/d3-taxBrackets/js"
+	],
+	"file_history":
+	[
+		"/home/alxd/Sketchbook/alxd/alxd/themes/skin-alxd/templates/base.html",
+		"/home/alxd/Sketchbook/alxd/alxd/themes/skin-alxd/static/css/main.css",
+		"/home/alxd/Sketchbook/alxd/alxd/content/10pl_foss_in_business.md",
+		"/home/aleksander/Hacking/alxd/alxd/content/pages/about.md",
+		"/home/aleksander/Hacking/alxd/alxd/publishconf.py",
+		"/home/aleksander/Hacking/alxd/alxd/content/07en_rational_transhumanism.md",
+		"/home/aleksander/Documents/GnuPG_leaflet_ENG_PL.txt",
+		"/home/aleksander/.config/sublime-text-3/Packages/User/Preferences.sublime-settings",
+		"/home/aleksander/Hacking/alxd/alxd/content/04en_offtopicarium.md",
+		"/home/aleksander/Hacking/alxd/alxd/themes/skin-alxd/templates/base.html",
+		"/home/aleksander/Hacking/alxd/alxd/content-to-be/06en_Gaza.md",
+		"/home/aleksander/Hacking/alxd/alxd/content/06en_CryptoParty_MSN.md",
+		"/home/aleksander/Hacking/alxd/alxd/fabfile.py",
+		"/home/aleksander/Hacking/alxd/alxd/content-to-be/06en_Gaza_Starts.md",
+		"/home/aleksander/Hacking/alxd/alxd/themes/skin-alxd/static/less/alxd.less",
+		"/home/aleksander/Hacking/alxd/alxd/content/05en_PyConPL.md",
+		"/home/aleksander/Hacking/alxd/alxd/pelicanconf.py",
+		"/home/aleksander/Hacking/alxd/alxd/content/01pl_neuroon_krol_jest_nagi.md",
+		"/home/aleksander/Hacking/alxd/alxd/content/03pl_sprostowanie_artykulu_w_bloombergu.md",
+		"/home/aleksander/Hacking/alxd/alxd/themes/skin-alxd/templates/page.html",
+		"/home/aleksander/Hacking/alxd/alxd/themes/skin-alxd/templates/article.html",
+		"/home/aleksander/Hacking/alxd/alxd/themes/skin-alxd/templates/archives.html",
+		"/home/aleksander/Hacking/alxd/alxd/themes/skin-alxd/templates/index.html",
+		"/home/aleksander/Hacking/alxd/alxd/content/02pl_Codzienne_problemy_cyborga_relacja.md",
+		"/home/aleksander/Hacking/alxd/alxd/content/02en_Daily_cyborg_the_story.md",
+		"/home/aleksander/.config/sublime-text-3/Packages/User/Distraction Free.sublime-settings",
+		"/home/aleksander/Hacking/alxd/alxd/content/02_Daily_cyborg_the_story.md",
+		"/home/aleksander/Hacking/alxd/alxd/content-to-be/Cyborg batteries",
+		"/home/aleksander/Hacking/alxd/alxd/content-to-be/04_startups_and_responsibility.md",
+		"/home/aleksander/Hacking/alxd/alxd/content-to-be/04-notes",
+		"/home/aleksander/Hacking/alxd/alxd/content-to-be/02_baterie_do_neurostymulatorow_w_polsce.md",
+		"/home/aleksander/Hacking/alxd/skin-alxd/alxd.org - original/static/css/less/alxd.less",
+		"/home/aleksander/Hacking/alxd/alxd/themes/skin-alxd/static/css/main.css",
+		"/home/aleksander/Hacking/alxd/alxd/README.md",
+		"/home/aleksander/Hacking/alxd/alxd/themes/alxd-test/templates/base.html",
+		"/home/aleksander/Hacking/alxd/alxd/themes/alxd.org/static/css/less/alxd.less",
+		"/home/aleksander/Hacking/alxd/alxd/themes/alxd.org/templates/base.html",
+		"/home/aleksander/Hacking/alxd/alxd/themes/alxd.org/static/css/Gruntfile.js",
+		"/home/aleksander/Hacking/alxd/alxd/themes/alxd.org/templates/robots.txt",
+		"/home/aleksander/Hacking/alxd/alxd/themes/alxd.org/templates/page.html",
+		"/home/aleksander/Hacking/alxd/alxd/themes/alxd.org/static/css/less/variables.less",
+		"/home/aleksander/Hacking/alxd/alxd/content/01_neuroon_krol_jest_nagi.md",
+		"/home/aleksander/Hacking/alxd/alxd/themes/alxd.org/static/css/less/button-groups.less",
+		"/home/aleksander/Hacking/alxd/alxd/themes/alxd.org/templates/index.html",
+		"/home/aleksander/Hacking/alxd/alxd/themes/alxd.org/templates/resources.html",
+		"/home/aleksander/Hacking/alxd/alxd/themes/alxd.org/templates/archives.html",
+		"/home/aleksander/Hacking/alxd/alxd/themes/alxd.org/templates/article.html",
+		"/home/aleksander/Hacking/alxd/alxd/themes/alxd-test/templates/index.html",
+		"/home/aleksander/Hacking/alxd/alxd/themes/alxd-test/templates/archives.html",
+		"/home/aleksander/Hacking/alxd/alxd/themes/alxd-test/templates/article.html",
+		"/home/aleksander/Hacking/alxd/alxd/themes/alxd/templates/archives.html",
+		"/home/aleksander/Hacking/alxd/alxd/themes/alxd/templates/article.html",
+		"/home/aleksander/Hacking/alxd/alxd/themes/alxd_new/templates/base.html",
+		"/home/aleksander/Hacking/alxd/alxd/themes/alxd/templates/base.html",
+		"/home/aleksander/Hacking/alxd/skin-alxd/templates/css/less/bootstrap.less",
+		"/home/aleksander/Hacking/alxd/skin-alxd/templates/css/less/variables.less",
+		"/home/aleksander/Hacking/alxd/skin-alxd/templates/css/less/alxd.less",
+		"/home/aleksander/Hacking/alxd/alxd/content/03_dry_electrodes.md",
+		"/home/aleksander/Hacking/alxd/alxd/content/02_neuroon_the_art_of_deflecting_questions.md",
+		"/home/aleksander/Hacking/alxd/skin-alxd/templates/archive.html",
+		"/home/aleksander/Hacking/alxd/skin-alxd/templates/base.html",
+		"/home/aleksander/Hacking/alxd/skin-alxd/templates/article.html",
+		"/home/aleksander/Hacking/alxd/skin-alxd/templates/css/dist/css/bootstrap.css",
+		"/home/aleksander/Hacking/alxd/skin-alxd/templates/css/less/media.less",
+		"/home/aleksander/Hacking/alxd/skin-alxd/templates/css/less/panels.less",
+		"/home/aleksander/Hacking/alxd/skin-alxd/bootstrap-3.2.0/less/variables.less",
+		"/home/aleksander/Hacking/alxd/skin-alxd/bootstrap-3.2.0/less/scaffolding.less",
+		"/home/aleksander/Hacking/alxd/skin-alxd/bootstrap-3.2.0/dist/css/bootstrap.css",
+		"/home/aleksander/Hacking/alxd/skin-alxd/bootstrap-3.2.0/less/bootstrap.less",
+		"/home/aleksander/Documents/KairosApplication.txt",
+		"/home/aleksander/Hacking/alxd/goaccess.sh",
+		"/home/aleksander/Hacking/alxd/alxd/themes/alxd/less/main.less",
+		"/home/aleksander/Downloads/bootstrap-3.2.0/less/grid.less",
+		"/home/aleksander/Downloads/bootstrap-3.2.0/less/navbar.less",
+		"/home/aleksander/Downloads/bootstrap-3.2.0/less/normalize.less",
+		"/home/aleksander/Downloads/bootstrap-3.2.0/less/variables.less",
+		"/home/aleksander/Downloads/bootstrap-3.2.0/less/mixins.less",
+		"/home/aleksander/Hacking/alxd/alxd/themes/alxd/templates/metadata.html",
+		"/home/aleksander/Hacking/alxd/alxd/themes/alxd/templates/page.html",
+		"/home/aleksander/Hacking/alxd/alxd/themes/alxd/templates/index.html",
+		"/home/aleksander/Hacking/alxd/alxd/themes/alxd/less/var.less",
+		"/home/aleksander/Hacking/alxd/alxd/themes/alxd/less/mixins.less",
+		"/home/aleksander/Hacking/alxd/alxd/themes/alxd/less/codehilite.less",
+		"/home/aleksander/Hacking/alxd/alxd/themes/alxd/less/print.less",
+		"/home/aleksander/Hacking/alxd/alxd/themes/alxd/templates/tags.html",
+		"/home/aleksander/Hacking/alxd/alxd/themes/alxd/templates/tag.html",
+		"/home/aleksander/Hacking/alxd/alxd/themes/alxd/templates/category.html",
+		"/home/aleksander/Hacking/alxd/old_alxd/alxd-blog/pelicanconf.py",
+		"/home/aleksander/Hacking/alxd/alxd/themes/alxd/pelican.conf.py-sample.py",
+		"/home/aleksander/Hacking/alxd/old_alxd/alxd-blog/content/01-neuroOn.md",
+		"/home/aleksander/Documents/NeuroOn.txt",
+		"/home/aleksander/10clouds/Tapeke/tapeke/client/app/scripts/directives/plotAreaChartDrv.js",
+		"/home/aleksander/10clouds/Tapeke/tapeke/client/app/scripts/directives/blockChartDrv.js",
+		"/home/aleksander/10clouds/Tapeke/tapeke/client/app/partials/directives/plotPieBar.html",
+		"/home/aleksander/10clouds/Tapeke/tapeke/client/app/scripts/directives/pieChartDrv.js",
+		"/home/aleksander/10clouds/Tapeke/tapeke/client/app/scripts/services/historyFilterSrv.js.orig",
+		"/home/aleksander/10clouds/Tapeke/tapeke/client/app/scripts/controllers/dashboardCtrl.js",
+		"/home/aleksander/10clouds/Tapeke/tapeke/client/app/scripts/services/accountPreferencesSrv.js",
+		"/home/aleksander/10clouds/Tapeke/tapeke/client/app/index.html",
+		"/home/aleksander/10clouds/Tapeke/tapeke/client/app/scripts/directives/plotPieBarDrv.js",
+		"/home/aleksander/10clouds/Tapeke/tapeke/client/app/scripts/controllers/statisticsCtrl.js",
+		"/home/aleksander/10clouds/Tapeke/tapeke/client/app/scripts/controllers/navbarCtrl.js",
+		"/home/aleksander/10clouds/Tapeke/tapeke/client/app/scripts/directives/plotHistDrv.js",
+		"/home/aleksander/10clouds/Tapeke/tapeke/client/app/scripts/directives/topTransDrv.js",
+		"/home/aleksander/10clouds/Tapeke/tapeke/client/app/scripts/directives/statsInd.js",
+		"/home/aleksander/10clouds/Tapeke/tapeke/client/app/scripts/controllers/statisticsCtrl.js.orig",
+		"/home/aleksander/10clouds/Tapeke/tapeke/client/app/scripts/services/historyFilterSrv.js",
+		"/home/aleksander/10clouds/Tapeke/tapeke/client/app/scripts/directives/pieBlockSwitcherDrv.js",
+		"/home/aleksander/10clouds/Tapeke/tapeke/client/app/partials/directives/blockChartTpl.html",
+		"/home/aleksander/10clouds/Tapeke/tapeke/client/app/partials/clientapp/navbarTpl.html",
+		"/home/aleksander/10clouds/Tapeke/tapeke/client/app/scripts/controllers/loggedInCtrl.js",
+		"/home/aleksander/10clouds/Tapeke/tapeke/client/app/scripts/services/chartSrv.js",
+		"/home/aleksander/10clouds/Tapeke/tapeke/client/app/partials/directives/pieChartTpl.html",
+		"/home/aleksander/10clouds/Tapeke/tapeke/client/app/partials/directives/plotHist.html",
+		"/home/aleksander/10clouds/Tapeke/tapeke/client/app/partials/clientapp/statistics/statisticsTpl.html",
+		"/home/aleksander/10clouds/Tapeke/tapeke/client/app/scripts/services/historySrv.js",
+		"/home/aleksander/10clouds/Tapeke/tapeke/client/app/partials/directives/pieBlockSwitcherTpl.html",
+		"/home/aleksander/10clouds/Tapeke/tapeke/client/app/scripts/services/binnerSrv.js",
+		"/home/aleksander/10clouds/Tapeke/tapeke/client/app/partials/directives/plotHisto.html",
+		"/home/aleksander/10clouds/Tapeke/tapeke/client/app/lib/highcharts/highcharts.src.js",
+		"/home/aleksander/10clouds/Tapeke/tapeke/client/app/scripts/directives/plotHistoDrv.js",
+		"/home/aleksander/10clouds/Tapeke/tapeke/client/app/partials/clientapp/statistics/statisticsCategoriesTpl.html",
+		"/home/aleksander/10clouds/Tapeke/tapeke/client/app/partials/clientapp/statistics/statisticsGeneralTpl.html",
+		"/home/aleksander/10clouds/Tapeke/tapeke/client/app/partials/clientapp/history/historyTpl.html",
+		"/home/aleksander/10clouds/Tapeke/tapeke/client/app/partials/clientapp/wallets/walletListTpl.html",
+		"/home/aleksander/10clouds/Tapeke/tapeke/server/tapeke/tapeke/apps/coins/views.py",
+		"/home/aleksander/10clouds/Tapeke/tapeke/client/app/scripts/services/walletSrv.js",
+		"/home/aleksander/10clouds/Tapeke/tapeke/client/app/styles/history.css"
+	],
+	"find":
+	{
+		"height": 37.0
+	},
+	"find_in_files":
+	{
+		"height": 95.0,
+		"where_history":
+		[
+			"/home/aleksander/Hacking/alxd/skin-alxd/templates/css/less",
+			"/templates/css/less",
+			"/home/aleksander/10clouds/Tapeke/tapeke/client/app/scripts",
+			"/home/aleksander/10clouds/Tapeke/tapeke/client/app",
+			"/home/aleksander/10clouds/Tapeke/tapeke/client/app/scripts",
+			"/home/aleksander/10clouds/Tapeke/tapeke/client/app",
+			"/home/aleksander/10clouds/Tapeke/tapeke/client/app/partials",
+			"/home/aleksander/10clouds/Tapeke/tapeke/client/app/",
+			"/home/aleksander/10clouds/Tapeke/tapeke/client/app/partials",
+			"/home/aleksander/10clouds/Tapeke/tapeke/client/app/scripts",
+			"/home/aleksander/10clouds/Tapeke/tapeke/client/app/",
+			"/home/aleksander/10clouds/Tapeke/tapeke/client/app/partials",
+			"/home/aleksander/10clouds/Tapeke/tapeke/client/app/scripts",
+			"/home/aleksander/10clouds/Tapeke/tapeke/client/app/",
+			"/home/aleksander/10clouds/Tapeke/tapeke/client/app/bower_components/zeroclipboard",
+			"/home/aleksander/10clouds/Tapeke/tap_current/client/js",
+			"/home/aleksander/10clouds/Tapeke/tap_current/client/app/",
+			"/home/aleksander/10clouds/Tapeke/tap_current/client/app/scripts/",
+			"/home/aleksander/10clouds/Tapeke/tapeke/client/app/scripts/",
+			"/home/aleksander/10clouds/Tapeke/tapeke/client",
+			"/home/aleksander/10clouds/Tapeke/tap_current/client",
+			"/home/aleksander/10clouds/Tapeke/tap_current",
+			"/home/aleksander/10clouds/Tapeke/tapeke/client/app/scripts",
+			"/home/aleksander/10clouds/Tapeke/tapeke/client/app/",
+			"/home/aleksander/10clouds/Tapeke/tapeke/client/app/scripts",
+			"/home/aleksander/10clouds/Tapeke/tapeke/client/app/",
+			"/home/aleksander/10clouds/Tapeke/tapeke/client/app/partials",
+			"/home/aleksander/10clouds/Tapeke/tapeke/client/app/scripts",
+			"/home/aleksander/10clouds/CrowdWorkers/vagrant/CrowdWorkers/repo/backend/accounts",
+			"/home/aleksander/10clouds/CrowdWorkers/vagrant/CrowdWorkers/repo/backend",
+			"/home/aleksander/10clouds/ChromeExtension/CrowdWorkers-extension-0.0.11_dev",
+			"/home/aleksander/10clouds/ChromeExtension/v02",
+			"/home/aleksander/10clouds/CrowdWorkers/vagrant/CrowdWorkers/repo/frontend/app/",
+			"/home/aleksander/10clouds/CrowdWorkers/vagrant/CrowdWorkers/repo/frontend/app/scripts/",
+			"/home/aleksander/10clouds/CrowdWorkers/vagrant/CrowdWorkers/repo/frontend/app/scripts/*.coffee",
+			"/home/aleksander/10clouds/CrowdWorkers/vagrant/CrowdWorkers/repo/frontend/app/scripts",
+			"/home/aleksander/10clouds/CrowdWorkers/vagrant/CrowdWorkers/repo/crowdworkers",
+			""
+		]
+	},
+	"find_state":
+	{
+		"case_sensitive": false,
+		"find_history":
+		[
+			"legendVisible",
+			"displayTooltip",
+			"bracketLength",
+			"measureTextLength",
+			"this.tooltip",
+			"measureTextLength",
+			".each(",
+			".on(",
+			".each",
+			".each(displayTooltipIfNoLegend('taxLength'));",
+			"\\.on\\(",
+			".on\\(",
+			"displayTooltipIfNoLegend",
+			".on",
+			".on(",
+			"this.tooltip",
+			"tooltip",
+			"this.tooltip",
+			"tooltip",
+			"this.tooltip",
+			"this",
+			"measureTextLength",
+			"DOEST",
+			"measureTextLength",
+			"tooltip",
+			"http",
+			"SITEURL",
+			"{{ SITE",
+			"nadawca",
+			"\\n\\n",
+			"\\n",
+			"przewodnik",
+			"Kno",
+			"Rah",
+			"organiz",
+			"https",
+			"participant",
+			";",
+			":",
+			"led",
+			"lead",
+			"alxd",
+			"habit",
+			"dystoni",
+			"course",
+			"[",
+			".*Ja:",
+			"*Ja:",
+			"DIY",
+			"!important",
+			"html",
+			"wrapper",
+			"container",
+			"dist",
+			"uglify",
+			"footer",
+			"div",
+			"article",
+			"images",
+			"col-sm-9",
+			"type",
+			"{{ CSS_FILE }}",
+			"image",
+			"new_ski",
+			"          <li>about",
+			"<li>",
+			"1",
+			"h3",
+			"ol",
+			"h2",
+			"a {",
+			"link",
+			"p",
+			"font-size",
+			"footer",
+			".body",
+			"p",
+			"font-style",
+			"body",
+			"mono",
+			"h4",
+			"h6",
+			"body-bg",
+			"Ow,",
+			"Ow.",
+			"75%",
+			"first_discussion",
+			"oczy_zamkniete_relaks2.jpg",
+			"prawdopobodnie",
+			"h1",
+			"h2",
+			"text-decoration",
+			".a",
+			".main",
+			"main",
+			"body",
+			"images",
+			"images\\",
+			"images",
+			"h2",
+			"h3",
+			"b",
+			"image",
+			"img",
+			"footer",
+			"px",
+			"body",
+			"h4",
+			"main",
+			"wrapper",
+			"w",
+			"a",
+			"a {",
+			"a:hover",
+			"1",
+			"header",
+			"banner",
+			"dsafdsfsdfsdfs",
+			"images/01_neuroon/EKG_z_palcow.gif",
+			"images/01_neuroon/EKG_z_klatki_piersiowej.gif",
+			"zamknięte",
+			"relaks",
+			"/images",
+			"neuroon",
+			"Kamil",
+			"„",
+			"ta dyskusja]",
+			"taking a cat apart"
+		],
+		"highlight": true,
+		"in_selection": false,
+		"preserve_case": false,
+		"regex": false,
+		"replace_history":
+		[
+			"\\n",
+			"\\n\\n",
+			"organis",
+			";<span style=\"display:none\">null</span>",
+			":<span style=\"display:none\">null</span>",
+			"",
+			"{filename}images",
+			"\"",
+			"",
+			"  ",
+			"init",
+			"plot.init",
+			"  ",
+			"expense",
+			"number :",
+			"category.name",
+			"category.fullName",
+			"categoryData.",
+			"",
+			"  ",
+			"$1:",
+			"income",
+			"expense",
+			"\\{\\n",
+			"{\\n",
+			"  ",
+			"col-md",
+			"  ",
+			"",
+			"\\n",
+			"\\\\n",
+			"on",
+			"$scope.resetEditedWallet",
+			"resetEditedWallet",
+			"$scope.resetEditedWallet",
+			"suggestionsSrv ",
+			"categories.suggestions ",
+			"$scope.categories.suggestions",
+			"expense",
+			"  ",
+			"revenue",
+			"'",
+			"',",
+			"'",
+			"',",
+			"",
+			" ",
+			"revenue",
+			"col-md-",
+			"col-lg-",
+			"",
+			",",
+			" = 0",
+			"http://192.168.10.11:9000",
+			"hitgroup",
+			"max_digits=5",
+			"lg",
+			";\\n",
+			"; ",
+			":",
+			"    ",
+			"reqQuery",
+			"hitQuery",
+			"pagination.",
+			"serializers.",
+			"serializers",
+			"pagination.pageSize",
+			"pagination.pageNumber",
+			":",
+			"p.",
+			"s.",
+			"serializers.",
+			"#",
+			"sp.Popen(",
+			"\""
+		],
+		"reverse": false,
+		"show_context": true,
+		"use_buffer2": true,
+		"whole_word": false,
+		"wrap": true
+	},
+	"groups":
+	[
+		{
+			"selected": 1,
+			"sheets":
+			[
+				{
+					"buffer": 0,
+					"file": ".gitignore",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 32,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								15,
+								15
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/Text/Plain text.tmLanguage"
+						},
+						"translation.x": 0.0,
+						"translation.y": 0.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 2,
+					"type": "text"
+				},
+				{
+					"buffer": 1,
+					"file": "es6/taxBrackets.js",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 13234,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								1034,
+								1034
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/JavaScriptNext - ES6 Syntax/JavaScriptNext.tmLanguage",
+							"tab_size": 2,
+							"translate_tabs_to_spaces": true
+						},
+						"translation.x": 0.0,
+						"translation.y": 432.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 0,
+					"type": "text"
+				},
+				{
+					"buffer": 2,
+					"file": "index.html",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 1192,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								98,
+								98
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/HTML/HTML.tmLanguage",
+							"tab_size": 2,
+							"translate_tabs_to_spaces": true
+						},
+						"translation.x": 0.0,
+						"translation.y": 0.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 1,
+					"type": "text"
+				}
+			]
+		}
+	],
+	"incremental_find":
+	{
+		"height": 26.0
+	},
+	"input":
+	{
+		"height": 33.0
+	},
+	"layout":
+	{
+		"cells":
+		[
+			[
+				0,
+				0,
+				1,
+				1
+			]
+		],
+		"cols":
+		[
+			0.0,
+			1.0
+		],
+		"rows":
+		[
+			0.0,
+			1.0
+		]
+	},
+	"menu_visible": true,
+	"output.exec":
+	{
+		"height": 108.0
+	},
+	"output.find_results":
+	{
+		"height": 0.0
+	},
+	"pinned_build_system": "",
+	"project": "taxBrackets.sublime-project",
+	"replace":
+	{
+		"height": 48.0
+	},
+	"save_all_on_build": true,
+	"select_file":
+	{
+		"height": 0.0,
+		"last_filter": "",
+		"selected_items":
+		[
+			[
+				"vh",
+				"repo/frontend/node_modules/grunt-contrib-connect/node_modules/connect/lib/middleware/vhost.js"
+			]
+		],
+		"width": 0.0
+	},
+	"select_project":
+	{
+		"height": 500.0,
+		"last_filter": "",
+		"selected_items":
+		[
+		],
+		"width": 380.0
+	},
+	"select_symbol":
+	{
+		"height": 375.0,
+		"last_filter": "",
+		"selected_items":
+		[
+		],
+		"width": 624.0
+	},
+	"selected_group": 0,
+	"settings":
+	{
+	},
+	"show_minimap": true,
+	"show_open_files": true,
+	"show_tabs": true,
+	"side_bar_visible": true,
+	"side_bar_width": 244.0,
+	"status_bar_visible": true,
+	"template_settings":
+	{
+	}
+}
